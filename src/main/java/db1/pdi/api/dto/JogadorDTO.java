@@ -6,6 +6,8 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 
 public record JogadorDTO(
+
+        //id precisa estar no DTO?
         @NotBlank
         String nomeJogador,
 

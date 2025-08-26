@@ -1,10 +1,10 @@
 package db1.pdi.api.controller;
 
+import db1.pdi.api.controller.requests.CreateJogadorRequest;
 import db1.pdi.api.dto.JogadorDTO;
 import db1.pdi.api.dto.GetJogadorDTO;
 import db1.pdi.api.dto.PontuacaoJogadorDTO;
-import db1.pdi.api.entities.Jogador;
-import db1.pdi.api.repositories.IJogadorRepository;
+import db1.pdi.api.services.IJogadorService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,45 +17,38 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/jogadores")
 public class JogadorController {
 
-    //Anotação ou construtor para injeção de dependência?
+ 
     @Autowired
-    public IJogadorRepository repository;
+    IJogadorService service;
 
     @PostMapping
     @Transactional
-    public void cadastrarJogador(@RequestBody @Valid JogadorDTO jogadorDTO) {
-        repository.save((new Jogador(jogadorDTO)));
+    public void postJogador(@RequestBody @Valid CreateJogadorRequest request) {
+        JogadorDTO jogadorDTO = new JogadorDTO(request.nomeJogador(), request.emailJogador(), 0L);
+        service.cadastrarJogador(jogadorDTO);
     }
 
     @GetMapping
-    public Page<GetJogadorDTO> listarJogadores(Pageable page) {
-        return repository.findAllByAtivoTrue(page).map(GetJogadorDTO::new);
+    public Page<GetJogadorDTO> getListaJogadores(Pageable page) {
+        return service.listarJogadores(page);
     }
 
-    //findbyID ou getReferenceByID?
     @GetMapping("/{id}")
-    public GetJogadorDTO retornarJogador(@PathVariable Long id) {
-        return repository.findById(id).map(GetJogadorDTO::new)
-                .orElseThrow(() -> new RuntimeException("Jogador não encontrado"));
+    public GetJogadorDTO getJogador(@PathVariable Long id) {
+        return service.retornarJogador(id);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    //exclusão lógica
-    public void deletarJogador(@PathVariable Long id) {
-        Jogador jogador = repository.getReferenceById(id);
-        jogador.inativar();}
+    public void deleteJogador(@PathVariable Long id) {
+        service.deletarJogador(id);}
 
     @PatchMapping("/{id}")
     @Transactional
-    public void atualizarPontuacaoJogador(@PathVariable Long id, @RequestBody @Valid PontuacaoJogadorDTO pontos){
-        Jogador jogador = repository.getReferenceById(id);
-        jogador.setPontuacaoJogador(pontos.pontuacaoJogador());
-        repository.save(jogador);
+    public void patchPontuacaoJogador(@PathVariable Long id, @RequestBody @Valid PontuacaoJogadorDTO pontos){
+        service.atualizarPontuacaoJogador(id, pontos);
     }
-
     //put para atualizar o Nome e email de jogador?
-
 }
 
 

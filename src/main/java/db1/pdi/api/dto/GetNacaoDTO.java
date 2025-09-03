@@ -1,18 +1,17 @@
 package db1.pdi.api.dto;
 
-import db1.pdi.api.entities.entitiesJPA.NacaoEntity;
+
+import db1.pdi.api.entities.entitiesJPA.NacaoEntityJPA;
 
 
 public record GetNacaoDTO(
 
         Long id,
-        String nomeNacao,
-        Long pontuacaoNacao) //soma da pontuação de todos os jogadores
+        String nomeNacao) //soma da pontuação de todos os jogadores
 {
-    public GetNacaoDTO(NacaoEntity nacao) {
+    public GetNacaoDTO(NacaoEntityJPA nacao) {
         this(
                 nacao.getIdNacao(),
-                nacao.getNomeNacao(),
-                nacao.getPontuacaoNacao());
+                nacao.getNomeNacao());
     }
 }

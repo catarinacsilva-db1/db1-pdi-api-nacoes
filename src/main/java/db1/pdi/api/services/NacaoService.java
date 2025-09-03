@@ -2,8 +2,8 @@ package db1.pdi.api.services;
 
 import db1.pdi.api.dto.GetNacaoDTO;
 import db1.pdi.api.dto.NacaoDTO;
-import db1.pdi.api.entities.entitiesJPA.NacaoEntity;
-import db1.pdi.api.repositories.INacaoRepository;
+import db1.pdi.api.entities.entitiesJPA.NacaoEntityJPA;
+import db1.pdi.api.repositories.INacaoRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 public class NacaoService implements INacaoService{
 
     @Autowired
-    INacaoRepository repository;
+    INacaoRepositoryJPA repository;
     IJogadorService jogadorService;
 
     public void cadastrarNacao(NacaoDTO nacaoDTO) {
-        repository.save((new NacaoEntity(nacaoDTO)));
+        repository.save((new NacaoEntityJPA(nacaoDTO)));
     }
 
     public Page<GetNacaoDTO> listarNacoes(Pageable page) {

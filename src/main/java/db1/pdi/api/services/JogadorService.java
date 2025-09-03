@@ -1,11 +1,11 @@
 package db1.pdi.api.services;
 
 
-import db1.pdi.api.dto.GetJogadorDTO;
+import db1.pdi.api.dto.JogadorDTOResponse;
 import db1.pdi.api.dto.JogadorDTO;
-import db1.pdi.api.dto.PontuacaoJogadorDTO;
+import db1.pdi.api.dto.PontosJogadorDTO;
 import db1.pdi.api.entities.entitiesJPA.JogadorEntityJPA;
-import db1.pdi.api.repositories.IJogadorRepository;
+import db1.pdi.api.repositories.IJogadorRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,29 +16,30 @@ import org.springframework.stereotype.Service;
 public class JogadorService implements IJogadorService{
 
     @Autowired
-    public IJogadorRepository repository;
+    public IJogadorRepositoryJPA repository;
 
     public void cadastrarJogador(JogadorDTO jogadorDTO) {
         repository.save((new JogadorEntityJPA(jogadorDTO)));
     }
 
-    public Page<GetJogadorDTO> listarJogadores(Pageable page) {
-        return repository.findAllByAtivoTrue(page).map(GetJogadorDTO::new);
+    public Page<JogadorDTOResponse> listarJogadores(Pageable page) {
+        return repository.findAllByAtivoTrue(page).map(JogadorDTOResponse::new);
     }
 
-    public GetJogadorDTO retornarJogador(Long id) {
-        return repository.findById(id).map(GetJogadorDTO::new) //findbyID ou getReferenceByID?
+    public JogadorDTOResponse retornarJogador(Long id) {
+        return repository.findById(id).map(JogadorDTOResponse::new) //findbyID ou getReferenceByID?
         .orElseThrow(() -> new RuntimeException("JogadorEntityJPA não encontrado"));
     }
     //exclusão lógica
     public void deletarJogador(Long id) {
         JogadorEntityJPA jogador = repository.getReferenceById(id);
+        //TODO: retirar esse método de JPA
         jogador.inativar();}
 
-    public void atualizarPontuacaoJogador(Long id, PontuacaoJogadorDTO pontos){
+    public JogadorEntityJPA atualizarPontuacaoJogador(Long id, PontosJogadorDTO pontos){
         JogadorEntityJPA jogador = repository.getReferenceById(id);
-        jogador.setPontuacaoJogador(pontos.pontuacaoJogador());
-        repository.save(jogador);
+        jogador.setPontuacaoJogador(pontos.pontosJogador());
+        return repository.save(jogador);
     }
 
 }

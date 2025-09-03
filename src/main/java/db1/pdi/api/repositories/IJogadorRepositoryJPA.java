@@ -6,6 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface IJogadorRepository extends JpaRepository<JogadorEntityJPA, Long> {
+public interface IJogadorRepositoryJPA extends JpaRepository<JogadorEntityJPA, Long> {
     Page<JogadorEntityJPA> findAllByAtivoTrue(Pageable page);
 }

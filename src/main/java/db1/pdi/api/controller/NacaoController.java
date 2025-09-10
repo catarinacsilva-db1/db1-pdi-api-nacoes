@@ -1,8 +1,8 @@
 package db1.pdi.api.controller;
 
-import db1.pdi.api.dto.GetNacaoDTO;
+import db1.pdi.api.controller.response.DetalheNacaoResponse;
 import db1.pdi.api.dto.NacaoDTO;
-import db1.pdi.api.services.INacaoService;
+import db1.pdi.api.domain.services.INacaoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,12 @@ public class NacaoController {
     }
 
     @GetMapping
-    public Page<GetNacaoDTO> getListaNacoes(Pageable page) {
+    public Page<DetalheNacaoResponse> getListaNacoes(Pageable page) {
         return service.listarNacoes(page);
     }
 
     @GetMapping("/{id}")
-    public GetNacaoDTO getNacao(@PathVariable Long id) {
+    public DetalheNacaoResponse getNacao(@PathVariable Long id) {
         return service.retornarNacao(id);
         //adicionar retorno de lista de jogadores da nação
     }

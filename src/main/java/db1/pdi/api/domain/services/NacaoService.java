@@ -1,9 +1,9 @@
-package db1.pdi.api.services;
+package db1.pdi.api.domain.services;
 
-import db1.pdi.api.dto.GetNacaoDTO;
+import db1.pdi.api.controller.response.DetalheNacaoResponse;
 import db1.pdi.api.dto.NacaoDTO;
-import db1.pdi.api.entities.entitiesJPA.NacaoEntityJPA;
-import db1.pdi.api.repositories.INacaoRepositoryJPA;
+import db1.pdi.api.persistence.entitiesJPA.NacaoEntityJPA;
+import db1.pdi.api.persistence.INacaoRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,12 +20,12 @@ public class NacaoService implements INacaoService{
         repository.save((new NacaoEntityJPA(nacaoDTO)));
     }
 
-    public Page<GetNacaoDTO> listarNacoes(Pageable page) {
-        return repository.findAll(page).map(GetNacaoDTO::new);
+    public Page<DetalheNacaoResponse> listarNacoes(Pageable page) {
+        return repository.findAll(page).map(DetalheNacaoResponse::new);
     }
 
-    public GetNacaoDTO retornarNacao(Long id) {
-        return repository.findById(id).map(GetNacaoDTO::new)
+    public DetalheNacaoResponse retornarNacao(Long id) {
+        return repository.findById(id).map(DetalheNacaoResponse::new)
                 .orElseThrow(() -> new RuntimeException("Nação não encontrada"));//checar exceção
         //adicionar retorno de lista de jogadores da nação
     }

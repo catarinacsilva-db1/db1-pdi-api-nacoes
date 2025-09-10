@@ -1,8 +1,7 @@
 package db1.pdi.api.dto;
 
-import db1.pdi.api.entities.entitiesJPA.NacaoEntityJPA;
+import db1.pdi.api.persistence.entitiesJPA.NacaoEntityJPA;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
 
 public record NacaoDTO(
 

@@ -1,6 +1,6 @@
-package db1.pdi.api.services;
+package db1.pdi.api.domain.services;
 
-import db1.pdi.api.dto.GetNacaoDTO;
+import db1.pdi.api.controller.response.DetalheNacaoResponse;
 import db1.pdi.api.dto.NacaoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 public interface INacaoService {
     void cadastrarNacao(NacaoDTO nacaoDTO);
 
-    Page<GetNacaoDTO> listarNacoes(Pageable page);
+    Page<DetalheNacaoResponse> listarNacoes(Pageable page);
 
-    GetNacaoDTO retornarNacao(Long id);
+    DetalheNacaoResponse retornarNacao(Long id);
 }

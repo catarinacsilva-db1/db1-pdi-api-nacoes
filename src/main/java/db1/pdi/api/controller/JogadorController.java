@@ -1,10 +1,10 @@
 package db1.pdi.api.controller;
 
 import db1.pdi.api.controller.requests.CreateJogadorRequest;
-import db1.pdi.api.dto.AtualizaPontosJogadorRequest;
+import db1.pdi.api.controller.requests.AtualizaPontosJogadorRequest;
 import db1.pdi.api.dto.JogadorDTO;
-import db1.pdi.api.dto.JogadorDTOResponse;
-import db1.pdi.api.services.IJogadorService;
+import db1.pdi.api.controller.response.DetalheJogadorResponse;
+import db1.pdi.api.domain.services.IJogadorService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,40 +25,46 @@ public class JogadorController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<JogadorDTO> postJogador(@RequestBody @Valid CreateJogadorRequest request) {
-        JogadorDTO jogadorDTO = new JogadorDTO(request.nomeJogador(), request.emailJogador(), 0L);
-        service.cadastrarJogador(jogadorDTO);
-        //TODO: retornar DTO com ID criado
-        return ResponseEntity.status(HttpStatus.CREATED).body(jogadorDTO);
+    public ResponseEntity<DetalheJogadorResponse> postJogador(@RequestBody @Valid CreateJogadorRequest request) {
+        JogadorDTO jogadorDTO = new JogadorDTO(0L, request.nomeJogador(), request.emailJogador(), 0L);
+        var jogadorCriado = service.cadastrarJogador(jogadorDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                new DetalheJogadorResponse(
+                        jogadorCriado.getIdJogador(),
+                        jogadorCriado.getNomeJogador(),
+                        jogadorCriado.getPontuacaoJogador()));
     }
 
     @GetMapping
-    public ResponseEntity<Page<JogadorDTOResponse> getListaJogadores(Pageable page) {
-        Page<JogadorDTOResponse> pagina = service.listarJogadores(page);
+    public ResponseEntity<Page<DetalheJogadorResponse>> getListaJogadores(Pageable page) {
+        Page<DetalheJogadorResponse> pagina = service.listarJogadores(page);
         return ResponseEntity.ok(pagina);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JogadorDTOResponse> getJogador(@PathVariable Long id) {
-        return service.retornarJogador(id);
+    public ResponseEntity<DetalheJogadorResponse> buscarJogador(@PathVariable Long id) {
+        var jogador = service.retornarJogador(id);
+        return ResponseEntity.ok(
+                new DetalheJogadorResponse(
+                        jogador.idJogador(),
+                        jogador.nomeJogador(),
+                        jogador.pontuacaoJogador()));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity deleteJogador(@PathVariable Long id) {
         service.deletarJogador(id);
-    return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}")
     @Transactional
-    public ResponseEntity patchPontuacaoJogador(@PathVariable Long id, @RequestBody @Valid AtualizaPontosJogadorRequest pontos){
-        var jogadorAtualizado = service.atualizarPontuacaoJogador(id, pontos);
+    public ResponseEntity<DetalheJogadorResponse> patchPontuacaoJogador(@PathVariable Long id, @RequestBody @Valid AtualizaPontosJogadorRequest pontos){
+        var jogadorAtualizado = service.atualizarPontuacaoJogador(id, pontos.pontosJogador());
         return ResponseEntity.ok(
-                new JogadorDTOResponse(
-                        jogadorAtualizado.getIdJogador(),
-                        jogadorAtualizado.getNomeJogador(),
-                        jogadorAtualizado.getPontuacaoJogador()));
+                new DetalheJogadorResponse(jogadorAtualizado));
     }
     //put para atualizar o Nome e email de jogador?
 }

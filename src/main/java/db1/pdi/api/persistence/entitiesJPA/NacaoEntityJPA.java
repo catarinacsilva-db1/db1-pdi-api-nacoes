@@ -1,4 +1,4 @@
-package db1.pdi.api.entities.entitiesJPA;
+package db1.pdi.api.persistence.entitiesJPA;
 
 import db1.pdi.api.dto.NacaoDTO;
 import jakarta.persistence.*;

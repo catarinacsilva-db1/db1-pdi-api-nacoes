@@ -10,4 +10,5 @@ public interface IJogadorRepository {
     Optional<JogadorDomain> findById(Long id);
     Page<JogadorDomain> findAllByAtivoTrue(Pageable page);
     void delete(JogadorDomain jogador);
+    JogadorDomain getReferenceById(Long id);
 }

@@ -4,7 +4,7 @@ import db1.pdi.api.domain.entities.JogadorDomain;
 import db1.pdi.api.persistence.entitiesJPA.JogadorEntityJPA;
 
 public class JogadorMapper {
-    private JogadorDomain toDomain(JogadorEntityJPA entity) {
+    public static JogadorDomain toDomain(JogadorEntityJPA entity) {
         return new JogadorDomain(
                 entity.getIdJogador(),
                 entity.getNomeJogador(),
@@ -14,7 +14,7 @@ public class JogadorMapper {
         );
     }
 
-    private JogadorEntityJPA toJPA(JogadorDomain domain) {
+    public static JogadorEntityJPA toJPA(JogadorDomain domain) {
         JogadorEntityJPA entity = new JogadorEntityJPA();
         entity.setIdJogador(domain.getIdJogador());
         entity.setNomeJogador(domain.getNomeJogador());

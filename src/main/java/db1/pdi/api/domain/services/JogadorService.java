@@ -17,8 +17,7 @@ public class JogadorService implements IJogadorService{
     @Autowired
     public IJogadorRepository repository;
 
-    public JogadorDomain cadastrarJogador(JogadorDTO jogadorDTO) {
-        JogadorDomain jogador = JogadorDomain.fromDTO(jogadorDTO);
+    public JogadorDomain cadastrarJogador(JogadorDomain jogador) {
         return repository.save(jogador);
     }
 
@@ -27,18 +26,20 @@ public class JogadorService implements IJogadorService{
     }
 
     public JogadorDomain retornarJogador(Long id) {
-        return repository.findById(id).map(JogadorDomain::new)
-        .orElseThrow(() -> new RuntimeException("Jogador não encontrado"));
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Jogador não encontrado"));
     }
 
     //exclusão lógica
     public void deletarJogador(Long id) {
-        JogadorDomain jogadorJPA = repository.getReferenceById(id);
-        jogador.inativar();}
+        JogadorDomain jogador = repository.getReferenceById(id);
+        jogador.inativar();
+        repository.save(jogador);
+    }
 
     public JogadorDomain atualizarPontuacaoJogador(Long id, Long pontos){
-        JogadorEntityJPA jogador = repository.getReferenceById(id);
-        jogador.setPontuacaoJogador(pontos);
+        JogadorDomain jogador = repository.getReferenceById(id);
+        jogador.atualizaPontos(pontos);
         return repository.save(jogador);
     }
 }

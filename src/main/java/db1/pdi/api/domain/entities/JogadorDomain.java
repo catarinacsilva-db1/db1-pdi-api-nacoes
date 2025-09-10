@@ -1,6 +1,5 @@
 package db1.pdi.api.domain.entities;
 
-import db1.pdi.api.dto.JogadorDTO;
 import lombok.Getter;
 
 @Getter
@@ -42,15 +41,4 @@ public class JogadorDomain {
         }
         this.ativo = false;
     }
-
-    public static JogadorDomain fromDTO(JogadorDTO dto){
-        return new JogadorDomain(
-                dto.idJogador(),
-                dto.nomeJogador(),
-                dto.emailJogador(),
-                dto.pontuacaoJogador(),
-                dto.idNacao()
-        );
-    }
-
 }

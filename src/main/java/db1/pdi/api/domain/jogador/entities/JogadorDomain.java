@@ -1,5 +1,6 @@
 package db1.pdi.api.domain.jogador.entities;
 
+import db1.pdi.api.domain.nacao.entities.NacaoDomain;
 import lombok.Getter;
 
 @Getter
@@ -8,27 +9,24 @@ public class JogadorDomain {
     private final String nomeJogador;
     private final String emailJogador;
     private Long pontuacaoJogador;
-    private final Long idNacao;
+    private NacaoDomain nacao;
     private boolean ativo;
 
-    // Construtor completo
-    public JogadorDomain(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, Long idNacao) {
+    public JogadorDomain(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, NacaoDomain nacao) {
         this.idJogador = idJogador;
         this.nomeJogador = nomeJogador;
         this.emailJogador = emailJogador;
         this.pontuacaoJogador = pontuacaoJogador;
-        this.idNacao = idNacao;
+        this.nacao = nacao;
         this.ativo = true;
     }
 
-    // Construtor para criação de novo jogador (sem id e pontuação inicial)
-    public JogadorDomain(String nomeJogador, String emailJogador) {
-        this.idJogador = null;
-        this.nomeJogador = nomeJogador;
-        this.emailJogador = emailJogador;
-        this.pontuacaoJogador = 0L;
-        this.idNacao = null;
-        this.ativo = true;
+
+    public void atribuirNacao(NacaoDomain nacao) {
+        if (this.nacao != null) {
+            throw new IllegalStateException("Jogador já pertence a uma nação");
+        }
+        this.nacao = nacao;
     }
 
     public void atualizaPontos(Long pontos) {

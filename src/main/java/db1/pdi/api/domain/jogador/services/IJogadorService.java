@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface IJogadorService {
 
-    //TODO: retornar JogadorDomain com ID
     JogadorDomain cadastrarJogador(JogadorDomain jogador);
 
     Page<JogadorDomain> listarJogadores(Pageable page);
@@ -16,4 +15,6 @@ public interface IJogadorService {
     void deletarJogador(Long id);
 
     JogadorDomain atualizarPontuacaoJogador(Long id, Long pontos);
+
+    Long retornarPontosNacao(Long idNacao);
 }

@@ -1,6 +1,6 @@
 package db1.pdi.api.persistence.nacao.JPA.entities;
 
-import db1.pdi.api.dto.NacaoDTO;
+
 import db1.pdi.api.persistence.jogador.JPA.entities.JogadorEntityJPA;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,9 +21,11 @@ public class NacaoEntityJPA {
     String nomeNacao;
 
     @OneToMany(mappedBy = "nacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<JogadorEntityJPA> jogadores = new java.util.ArrayList<>();
+    List<JogadorEntityJPA> jogadores;
 
-    public NacaoEntityJPA(NacaoDTO nacaoDTO) {
-        this.nomeNacao = nacaoDTO.nomeNacao();
+    public NacaoEntityJPA(Long idNacao, String nomeNacao, List<JogadorEntityJPA> jogadores) {
+        this.idNacao = idNacao;
+        this.nomeNacao = nomeNacao;
+        this.jogadores = jogadores;
     }
 }

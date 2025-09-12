@@ -1,14 +1,19 @@
 package db1.pdi.api.controller.nacao;
 
+import db1.pdi.api.controller.nacao.request.CreateNacaoRequest;
 import db1.pdi.api.controller.nacao.response.DetalheNacaoResponse;
-import db1.pdi.api.dto.NacaoDTO;
+import db1.pdi.api.controller.nacao.response.ListarNacaoResponse;
+import db1.pdi.api.controller.nacao.response.utils.NacaoResponseMapper;
+import db1.pdi.api.domain.nacao.entities.NacaoDomain;
+import db1.pdi.api.domain.nacao.entities.NacaoDomainFactory;
 import db1.pdi.api.domain.nacao.services.INacaoService;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/nacoes")
@@ -19,18 +24,20 @@ public class NacaoController {
 
     @PostMapping
     @Transactional
-    public void postNacao(@RequestBody @Valid NacaoDTO nacaoDTO) {
-        service.cadastrarNacao(nacaoDTO);
+    public ResponseEntity<DetalheNacaoResponse> cadastrarNacao (@RequestBody CreateNacaoRequest request) {
+        NacaoDomain nacao = service.cadastrarNacao(NacaoDomainFactory.create(request.nomeNacao()));
+        return ResponseEntity.ok(NacaoResponseMapper.toResponse(nacao));
     }
 
     @GetMapping
-    public Page<DetalheNacaoResponse> getListaNacoes(Pageable page) {
-        return service.listarNacoes(page);
+    public ResponseEntity<Page<ListarNacaoResponse>> rankearNacoes(Pageable page) {
+        Page<ListarNacaoResponse> nacoes = service.listarRankingNacoes(page).map(NacaoResponseMapper::toResponseList);
+        return ResponseEntity.ok(nacoes);
     }
 
     @GetMapping("/{id}")
-    public DetalheNacaoResponse getNacao(@PathVariable Long id) {
-        return service.retornarNacao(id);
-        //adicionar retorno de lista de jogadores da nação
+    public ResponseEntity<DetalheNacaoResponse> buscarNacao(@PathVariable Long id) {
+        NacaoDomain nacao = service.retornarNacao(id);
+        return ResponseEntity.ok(NacaoResponseMapper.toResponse(nacao));
     }
 }

@@ -1,7 +1,7 @@
 package db1.pdi.api.domain.jogador.services;
 
 
-import db1.pdi.api.dto.JogadorDTO;
+
 import db1.pdi.api.domain.jogador.entities.JogadorDomain;
 import db1.pdi.api.domain.jogador.repositories.IJogadorRepositoryDomain;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class JogadorService implements IJogadorService {
     }
 
     public Page<JogadorDomain> listarJogadores(Pageable page) {
-        return repository.findAllByAtivoTrue(page).map(JogadorDomain::new);
+        return repository.findAllByAtivoTrue(page);
     }
 
     public JogadorDomain retornarJogador(Long id) {
@@ -40,5 +40,9 @@ public class JogadorService implements IJogadorService {
         JogadorDomain jogador = repository.getReferenceById(id);
         jogador.atualizaPontos(pontos);
         return repository.save(jogador);
+    }
+
+    public Long retornarPontosNacao(Long idNacao){
+        return repository.somaPontosJogadoresPorNacao(idNacao);
     }
 }

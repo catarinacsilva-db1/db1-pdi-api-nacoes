@@ -20,20 +20,20 @@ public class JogadorEntityJPA {
     @Column(nullable = false, unique = true)
     private String emailJogador;
 
-    @PositiveOrZero
-
+    @PositiveOrZero @Column(nullable = false, unique = true)
     private Long pontuacaoJogador;
 
     @ManyToOne
     private NacaoEntityJPA nacao;
 
-    private Boolean ativo = true;
+    private Boolean ativo;
 
-   public Long getNacaoId(){
-       if (nacao != null) {
-           return nacao.getIdNacao();
-       } else {
-           throw new IllegalArgumentException("Não há Nação associada ao jogador");
-       }
-   }
+    public JogadorEntityJPA(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, NacaoEntityJPA nacao, Boolean ativo) {
+        this.idJogador = idJogador;
+        this.nomeJogador = nomeJogador;
+        this.emailJogador = emailJogador;
+        this.pontuacaoJogador = pontuacaoJogador;
+        this.nacao = nacao;
+        this.ativo = ativo;
+    }
 }

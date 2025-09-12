@@ -1,29 +1,56 @@
 package db1.pdi.api.persistence.jogador.JPA.mappers;
 
 import db1.pdi.api.domain.jogador.entities.JogadorDomain;
+import db1.pdi.api.domain.jogador.entities.JogadorDomainFactory;
+import db1.pdi.api.domain.nacao.entities.NacaoDomain;
 import db1.pdi.api.persistence.jogador.JPA.entities.JogadorEntityJPA;
+import db1.pdi.api.persistence.nacao.JPA.entities.NacaoEntityJPA;
+import db1.pdi.api.persistence.nacao.JPA.mappers.NacaoMapperJPA;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
 public class JogadorMapperJPA {
+
+    final NacaoMapperJPA nacaoMapperJPA;
+
+    public JogadorMapperJPA(NacaoMapperJPA nacaoMapperJPA){
+        this.nacaoMapperJPA = nacaoMapperJPA;
+    }
+
     public static JogadorDomain toDomain(JogadorEntityJPA entity) {
+        NacaoDomain nacao = entity.getNacao() != null ?
+                NacaoMapperJPA.toJogadorDomain(entity.getNacao()) : null;
+
         return new JogadorDomain(
                 entity.getIdJogador(),
                 entity.getNomeJogador(),
                 entity.getEmailJogador(),
                 entity.getPontuacaoJogador(),
-                entity.getNacaoId()
+                nacao
         );
     }
 
-    public static JogadorEntityJPA toJPA(JogadorDomain domain) {
-        JogadorEntityJPA entity = new JogadorEntityJPA();
-        entity.setIdJogador(domain.getIdJogador());
-        entity.setNomeJogador(domain.getNomeJogador());
-        entity.setEmailJogador(domain.getEmailJogador());
-        entity.setPontuacaoJogador(domain.getPontuacaoJogador());
-        //TODO entender como funciona essa conversão entre nacaoId e NacaoEntityJPA
-        //entity.setNacaoId(domain.getIdNacao());
+    public static List<JogadorDomain> toDomainListJogadoresJPA(List<JogadorEntityJPA> jogadores) {
+        return jogadores.stream()
+                .map(jogador -> JogadorDomainFactory.toListJogadores(
+                        jogador.getIdJogador(),
+                        jogador.getNomeJogador(),
+                        jogador.getPontuacaoJogador()))
+                .toList();
+    }
 
-        entity.setAtivo(domain.isAtivo());
-        return entity;
+    public static JogadorEntityJPA toJPA(JogadorDomain domain) {
+        NacaoEntityJPA nacao = domain.getNacao() != null ?
+                NacaoMapperJPA.toJPA(domain.getNacao()) : null;
+        return new JogadorEntityJPA(
+                domain.getIdJogador(),
+                domain.getNomeJogador(),
+                domain.getEmailJogador(),
+                domain.getPontuacaoJogador(),
+                nacao,
+                domain.isAtivo()
+        );
     }
 }

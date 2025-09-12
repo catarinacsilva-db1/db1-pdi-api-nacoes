@@ -1,5 +1,7 @@
 package db1.pdi.api.controller.nacao.response;
 
 
-public record DetalheNacaoResponse(){
+import java.util.List;
+
+public record DetalheNacaoResponse(Long idNacao, String nomeNacao, List jogadores) {
 }

@@ -20,7 +20,7 @@ public class JogadorEntityJPA {
     @Column(nullable = false, unique = true)
     private String emailJogador;
 
-    @PositiveOrZero @Column(nullable = false, unique = true)
+    @PositiveOrZero @Column(nullable = false)
     private Long pontuacaoJogador;
 
     @ManyToOne

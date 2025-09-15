@@ -14,12 +14,6 @@ import java.util.List;
 @Component
 public class NacaoMapperJPA {
 
-    final JogadorMapperJPA jogadorMapperJPA;
-
-    public NacaoMapperJPA(JogadorMapperJPA jogadorMapperJPA){
-        this.jogadorMapperJPA = jogadorMapperJPA;
-    }
-
     public static NacaoDomain toDomain(NacaoEntityJPA nacao) {
         List<JogadorDomain> listaJogadores = nacao.getJogadores()  != null ?
                 nacao.getJogadores().stream()

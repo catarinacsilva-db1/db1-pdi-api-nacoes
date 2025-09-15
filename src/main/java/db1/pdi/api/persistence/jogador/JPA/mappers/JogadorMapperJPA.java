@@ -13,12 +13,6 @@ import java.util.List;
 @Component
 public class JogadorMapperJPA {
 
-    final NacaoMapperJPA nacaoMapperJPA;
-
-    public JogadorMapperJPA(NacaoMapperJPA nacaoMapperJPA){
-        this.nacaoMapperJPA = nacaoMapperJPA;
-    }
-
     public static JogadorDomain toDomain(JogadorEntityJPA entity) {
         NacaoDomain nacao = entity.getNacao() != null ?
                 NacaoMapperJPA.toJogadorDomain(entity.getNacao()) : null;

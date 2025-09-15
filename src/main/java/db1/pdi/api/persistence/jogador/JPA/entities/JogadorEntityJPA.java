@@ -24,6 +24,7 @@ public class JogadorEntityJPA {
     private Long pontuacaoJogador;
 
     @ManyToOne
+    @JoinColumn(name = "id_nacao")
     private NacaoEntityJPA nacao;
 
     private Boolean ativo;

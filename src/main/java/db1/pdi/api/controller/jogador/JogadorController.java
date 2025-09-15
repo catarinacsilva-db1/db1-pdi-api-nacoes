@@ -2,7 +2,7 @@ package db1.pdi.api.controller.jogador;
 
 import db1.pdi.api.controller.jogador.requests.CreateJogadorRequest;
 import db1.pdi.api.controller.jogador.requests.AtualizaPontosJogadorRequest;
-import db1.pdi.api.controller.jogador.response.JogadorResponseMapper;
+import db1.pdi.api.controller.jogador.response.utils.JogadorResponseMapper;
 import db1.pdi.api.domain.jogador.entities.JogadorDomain;
 import db1.pdi.api.controller.jogador.response.DetalheJogadorResponse;
 import db1.pdi.api.domain.jogador.entities.JogadorDomainFactory;

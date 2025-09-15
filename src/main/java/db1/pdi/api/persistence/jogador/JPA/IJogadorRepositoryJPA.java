@@ -12,6 +12,6 @@ public interface IJogadorRepositoryJPA extends JpaRepository<JogadorEntityJPA, L
     Page<JogadorEntityJPA> findAllByAtivoTrue(Pageable page);
     boolean existsByEmailJogador(String email);
 
-    @Query("SELECT SUM(j.pontuacaoJogador) FROM JogadorEntityJPA j WHERE j.nacao.idNacao = :idNacao")
+    @Query("SELECT SUM(j.pontuacaoJogador) FROM jogador j WHERE j.nacao.idNacao = :idNacao")
     Long somaPontosJogadoresPorNacao(@Param("idNacao") Long idNacao);
 }

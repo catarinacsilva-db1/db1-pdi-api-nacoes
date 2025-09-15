@@ -1,1 +1,0 @@
-alter table jogador add column ativo boolean not null default true;

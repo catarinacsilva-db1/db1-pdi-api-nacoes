@@ -7,10 +7,11 @@ import db1.pdi.api.domain.nacao.entities.NacaoDomainFactory;
 import db1.pdi.api.persistence.jogador.JPA.entities.JogadorEntityJPA;
 import db1.pdi.api.persistence.jogador.JPA.mappers.JogadorMapperJPA;
 import db1.pdi.api.persistence.nacao.JPA.entities.NacaoEntityJPA;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-
+@Component
 public class NacaoMapperJPA {
 
     final JogadorMapperJPA jogadorMapperJPA;

@@ -5,9 +5,11 @@ import db1.pdi.api.controller.nacao.response.ListarJogadoresResponse;
 import db1.pdi.api.controller.nacao.response.ListarNacaoResponse;
 import db1.pdi.api.domain.jogador.entities.JogadorDomain;
 import db1.pdi.api.domain.nacao.entities.NacaoDomain;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class NacaoResponseMapper {
 
     public static DetalheNacaoResponse toResponse(NacaoDomain nacao) {

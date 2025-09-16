@@ -1,7 +1,6 @@
 package db1.pdi.api.domain.nacao.repositories;
 
 
-import db1.pdi.api.domain.nacao.entities.NacaoDomain;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

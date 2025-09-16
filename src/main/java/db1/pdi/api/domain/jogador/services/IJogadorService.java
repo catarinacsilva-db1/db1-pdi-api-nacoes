@@ -1,20 +1,21 @@
 package db1.pdi.api.domain.jogador.services;
 
-import db1.pdi.api.domain.jogador.entities.JogadorDomain;
+import db1.pdi.api.domain.jogador.JogadorDTO;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface IJogadorService {
 
-    JogadorDomain cadastrarJogador(JogadorDomain jogador);
+    JogadorDTO cadastrarJogador(JogadorDTO jogador);
 
-    Page<JogadorDomain> listarJogadores(Pageable page);
+    Page<JogadorDTO> listarJogadores(Pageable page);
 
-    JogadorDomain retornarJogador(Long id);
+    JogadorDTO retornarJogador(Long id);
 
     void deletarJogador(Long id);
 
-    JogadorDomain atualizarPontuacaoJogador(Long id, Long pontos);
+    JogadorDTO atualizarPontuacaoJogador(Long id, Long pontos);
 
-    JogadorDomain atribuirNacaoAoJogador(Long idJogador, Long idNacao);
+    JogadorDTO atribuirNacaoAoJogador(Long idJogador, Long idNacao);
 }

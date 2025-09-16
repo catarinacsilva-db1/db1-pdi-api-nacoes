@@ -1,4 +1,4 @@
-package db1.pdi.api.persistence.jogador.JPA;
+package db1.pdi.api.persistence.jogador.JPA.repositories;
 
 import db1.pdi.api.persistence.jogador.JPA.entities.JogadorEntityJPA;
 import org.springframework.data.domain.Page;

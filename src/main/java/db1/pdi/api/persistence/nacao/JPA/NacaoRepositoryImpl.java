@@ -1,9 +1,6 @@
 package db1.pdi.api.persistence.nacao.JPA;
 
-import db1.pdi.api.domain.nacao.entities.NacaoDomain;
 import db1.pdi.api.domain.nacao.repositories.INacaoRepositoryDomain;
-import db1.pdi.api.persistence.jogador.JPA.entities.JogadorEntityJPA;
-import db1.pdi.api.persistence.jogador.JPA.mappers.JogadorMapperJPA;
 import db1.pdi.api.persistence.nacao.JPA.entities.NacaoEntityJPA;
 import db1.pdi.api.persistence.nacao.JPA.mappers.NacaoMapperJPA;
 import org.springframework.beans.factory.annotation.Autowired;

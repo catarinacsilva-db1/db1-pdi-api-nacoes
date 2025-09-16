@@ -1,6 +1,6 @@
 package db1.pdi.api.domain.jogador.entities;
 
-import jdk.jfr.Category;
+
 import org.springframework.stereotype.Component;
 
 @Component

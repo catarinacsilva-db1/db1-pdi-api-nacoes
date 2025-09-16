@@ -4,10 +4,11 @@ import db1.pdi.api.controller.jogador.requests.AtribuiNacaoJogadorRequest;
 import db1.pdi.api.controller.jogador.requests.CreateJogadorRequest;
 import db1.pdi.api.controller.jogador.requests.AtualizaPontosJogadorRequest;
 import db1.pdi.api.controller.jogador.response.utils.JogadorResponseMapper;
-import db1.pdi.api.domain.jogador.entities.JogadorDomain;
 import db1.pdi.api.controller.jogador.response.DetalheJogadorResponse;
-import db1.pdi.api.domain.jogador.entities.JogadorDomainFactory;
+import db1.pdi.api.domain.jogador.JogadorDTO;
 import db1.pdi.api.domain.jogador.services.IJogadorService;
+
+
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,9 @@ public class JogadorController {
     @PostMapping
     @Transactional
     public ResponseEntity<DetalheJogadorResponse> postJogador(@RequestBody @Valid CreateJogadorRequest request) {
-        JogadorDomain jogador = service.cadastrarJogador(
-                JogadorDomainFactory.create(
-                request.nomeJogador(),
-                request.emailJogador()));
+
+        JogadorDTO jogador = service.cadastrarJogador(
+                new JogadorDTO(request.nomeJogador(), request.emailJogador()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 JogadorResponseMapper.toResponse(jogador));
@@ -46,7 +46,7 @@ public class JogadorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DetalheJogadorResponse> buscarJogador(@PathVariable Long id) {
-        JogadorDomain jogador = service.retornarJogador(id);
+        JogadorDTO jogador = service.retornarJogador(id);
         return ResponseEntity.ok(
                 JogadorResponseMapper.toResponse(jogador));
     }
@@ -61,7 +61,7 @@ public class JogadorController {
     @PatchMapping("/{id}")
     @Transactional
     public ResponseEntity<DetalheJogadorResponse> patchPontuacaoJogador(@PathVariable Long id, @RequestBody AtualizaPontosJogadorRequest pontos){
-        JogadorDomain jogador = service.atualizarPontuacaoJogador(id, pontos.pontosJogador());
+        JogadorDTO jogador = service.atualizarPontuacaoJogador(id, pontos.pontosJogador());
         return ResponseEntity.ok(
                 JogadorResponseMapper.toResponse(jogador));
     }
@@ -69,7 +69,7 @@ public class JogadorController {
     @PatchMapping("/{idJogador}/nacao")
     @Transactional
     public ResponseEntity<DetalheJogadorResponse> putAtribuirNacao(@PathVariable Long idJogador, @RequestBody AtribuiNacaoJogadorRequest nacao){
-        JogadorDomain jogador = service.atribuirNacaoAoJogador(idJogador, nacao.idNacao());
+        JogadorDTO jogador = service.atribuirNacaoAoJogador(idJogador, nacao.idNacao());
         return ResponseEntity.ok(
                 JogadorResponseMapper.toResponse(jogador));
     }

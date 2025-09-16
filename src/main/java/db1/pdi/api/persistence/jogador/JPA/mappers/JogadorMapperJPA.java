@@ -2,7 +2,7 @@ package db1.pdi.api.persistence.jogador.JPA.mappers;
 
 import db1.pdi.api.domain.jogador.entities.JogadorDomain;
 import db1.pdi.api.domain.jogador.entities.JogadorDomainFactory;
-import db1.pdi.api.domain.nacao.entities.NacaoDomain;
+import db1.pdi.api.domain.nacao.entities.NacaoDTO;
 import db1.pdi.api.persistence.jogador.JPA.entities.JogadorEntityJPA;
 import db1.pdi.api.persistence.nacao.JPA.entities.NacaoEntityJPA;
 import db1.pdi.api.persistence.nacao.JPA.mappers.NacaoMapperJPA;
@@ -14,7 +14,7 @@ import java.util.List;
 public class JogadorMapperJPA {
 
     public static JogadorDomain toDomain(JogadorEntityJPA entity) {
-        NacaoDomain nacao = entity.getNacao() != null ?
+        NacaoDTO nacao = entity.getNacao() != null ?
                 NacaoMapperJPA.toJogadorDomain(entity.getNacao()) : null;
 
         return new JogadorDomain(

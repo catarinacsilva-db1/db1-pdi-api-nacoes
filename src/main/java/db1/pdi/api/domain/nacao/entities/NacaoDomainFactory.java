@@ -1,7 +1,6 @@
 package db1.pdi.api.domain.nacao.entities;
 
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 

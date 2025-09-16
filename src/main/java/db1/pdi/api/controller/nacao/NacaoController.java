@@ -4,9 +4,10 @@ import db1.pdi.api.controller.nacao.request.CreateNacaoRequest;
 import db1.pdi.api.controller.nacao.response.DetalheNacaoResponse;
 import db1.pdi.api.controller.nacao.response.ListarNacaoResponse;
 import db1.pdi.api.controller.nacao.response.utils.NacaoResponseMapper;
-import db1.pdi.api.domain.nacao.entities.NacaoDomain;
+import db1.pdi.api.domain.nacao.entities.NacaoDTO;
 import db1.pdi.api.domain.nacao.entities.NacaoDomainFactory;
 import db1.pdi.api.domain.nacao.services.INacaoService;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,7 +26,7 @@ public class NacaoController {
     @PostMapping
     @Transactional
     public ResponseEntity<ListarNacaoResponse> cadastrarNacao (@RequestBody CreateNacaoRequest request) {
-        NacaoDomain nacao = service.cadastrarNacao(NacaoDomainFactory.create(request.nomeNacao()));
+        NacaoDTO nacao = service.cadastrarNacao(NacaoDomainFactory.create(request.nomeNacao()));
         return ResponseEntity.ok(NacaoResponseMapper.toResponseList(nacao));
     }
 
@@ -37,7 +38,7 @@ public class NacaoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DetalheNacaoResponse> buscarNacao(@PathVariable Long id) {
-        NacaoDomain nacao = service.retornarNacao(id);
+        NacaoDTO nacao = service.retornarNacao(id);
         return ResponseEntity.ok(NacaoResponseMapper.toResponse(nacao));
     }
 }

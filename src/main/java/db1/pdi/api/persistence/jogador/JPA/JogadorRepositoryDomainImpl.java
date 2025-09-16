@@ -4,6 +4,7 @@ import db1.pdi.api.domain.jogador.entities.JogadorDomain;
 import db1.pdi.api.persistence.jogador.JPA.entities.JogadorEntityJPA;
 import db1.pdi.api.persistence.jogador.JPA.mappers.JogadorMapperJPA;
 import db1.pdi.api.domain.jogador.repositories.IJogadorRepositoryDomain;
+import db1.pdi.api.persistence.jogador.JPA.repositories.IJogadorRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

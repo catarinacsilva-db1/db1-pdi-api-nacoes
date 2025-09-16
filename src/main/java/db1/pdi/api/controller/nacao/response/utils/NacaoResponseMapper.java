@@ -5,7 +5,7 @@ import db1.pdi.api.controller.nacao.response.DetalheNacaoResponse;
 import db1.pdi.api.controller.jogador.response.ListarJogadoresResponse;
 import db1.pdi.api.controller.nacao.response.ListarNacaoResponse;
 import db1.pdi.api.controller.nacao.response.NacaoFromJogadorResponse;
-import db1.pdi.api.domain.nacao.entities.NacaoDomain;
+import db1.pdi.api.domain.nacao.entities.NacaoDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,24 +13,24 @@ import java.util.List;
 @Component
 public class NacaoResponseMapper {
 
-    public static DetalheNacaoResponse toResponse(NacaoDomain nacao) {
-        List<ListarJogadoresResponse> jogadores = JogadorResponseMapper.toListJogadoresResponse(nacao.getJogadores());
+    public static DetalheNacaoResponse toResponse(NacaoDTO nacao) {
+        List<ListarJogadoresResponse> jogadores = JogadorResponseMapper.toListJogadoresResponse(nacao.jogadores());
         return new DetalheNacaoResponse(
-                nacao.getIdNacao(),
-                nacao.getNomeNacao(),
+                nacao.idNacao(),
+                nacao.nomeNacao(),
                 jogadores);
     }
 
-    public static ListarNacaoResponse toResponseList(NacaoDomain nacao) {
+    public static ListarNacaoResponse toResponseList(NacaoDTO nacao) {
         return new ListarNacaoResponse(
-                nacao.getIdNacao(),
-                nacao.getNomeNacao(),
-                nacao.getPontosNacao());
+                nacao.idNacao(),
+                nacao.nomeNacao(),
+                nacao.pontosNacao());
     }
 
-    public static NacaoFromJogadorResponse toResponseFromJogador(NacaoDomain nacao) {
+    public static NacaoFromJogadorResponse toResponseFromJogador(NacaoDTO nacao) {
         return new NacaoFromJogadorResponse(
-                nacao.getIdNacao(),
-                nacao.getNomeNacao());
+                nacao.idNacao(),
+                nacao.nomeNacao());
     }
 }

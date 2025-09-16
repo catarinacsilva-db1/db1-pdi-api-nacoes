@@ -16,5 +16,5 @@ public interface IJogadorService {
 
     JogadorDomain atualizarPontuacaoJogador(Long id, Long pontos);
 
-    Long retornarPontosNacao(Long idNacao);
+    JogadorDomain atribuirNacaoAoJogador(Long idJogador, Long idNacao);
 }

@@ -1,5 +1,6 @@
 package db1.pdi.api.controller.jogador;
 
+import db1.pdi.api.controller.jogador.requests.AtribuiNacaoJogadorRequest;
 import db1.pdi.api.controller.jogador.requests.CreateJogadorRequest;
 import db1.pdi.api.controller.jogador.requests.AtualizaPontosJogadorRequest;
 import db1.pdi.api.controller.jogador.response.utils.JogadorResponseMapper;
@@ -61,6 +62,14 @@ public class JogadorController {
     @Transactional
     public ResponseEntity<DetalheJogadorResponse> patchPontuacaoJogador(@PathVariable Long id, @RequestBody AtualizaPontosJogadorRequest pontos){
         JogadorDomain jogador = service.atualizarPontuacaoJogador(id, pontos.pontosJogador());
+        return ResponseEntity.ok(
+                JogadorResponseMapper.toResponse(jogador));
+    }
+
+    @PatchMapping("/{idJogador}/nacao")
+    @Transactional
+    public ResponseEntity<DetalheJogadorResponse> putAtribuirNacao(@PathVariable Long idJogador, @RequestBody AtribuiNacaoJogadorRequest nacao){
+        JogadorDomain jogador = service.atribuirNacaoAoJogador(idJogador, nacao.idNacao());
         return ResponseEntity.ok(
                 JogadorResponseMapper.toResponse(jogador));
     }

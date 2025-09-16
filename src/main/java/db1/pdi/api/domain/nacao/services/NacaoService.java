@@ -2,7 +2,8 @@ package db1.pdi.api.domain.nacao.services;
 
 
 
-import db1.pdi.api.domain.jogador.services.IJogadorService;
+import db1.pdi.api.domain.jogador.services.IPontuacaoService;
+import db1.pdi.api.domain.jogador.services.PontuacaoService;
 import db1.pdi.api.domain.nacao.entities.NacaoDomain;
 import db1.pdi.api.domain.nacao.repositories.INacaoRepositoryDomain;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,24 +16,20 @@ public class NacaoService implements INacaoService{
 
     @Autowired
     private INacaoRepositoryDomain repository;
+
     @Autowired
-    private IJogadorService jogadorService;
+    private IPontuacaoService pontosService;
+
 
     public NacaoDomain cadastrarNacao(NacaoDomain nacao) {
         return repository.save(nacao);
     }
 
-    public Page<NacaoDomain> listarRankingNacoes(Pageable page) {
-        return repository.buscarListaNacoes(page);
-    }
+public Page<NacaoDomain> listarRankingNacoes(Pageable page) {
+    return repository.buscarListaNacoes(page).map(pontosService::retornaPontosNacao);
+}
 
     public NacaoDomain retornarNacao(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Nação não encontrada") );
-    }
-
-    public Long retornaPontosNacao(Long idNacao) {
-        return jogadorService.retornarPontosNacao(idNacao);
-    }
-
-
+        NacaoDomain nacao = repository.findById(id).orElseThrow(() -> new RuntimeException("Nação não encontrada") );
+    return pontosService.retornaPontosNacao(nacao);}
 }

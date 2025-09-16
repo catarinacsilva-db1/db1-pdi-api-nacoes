@@ -34,9 +34,10 @@ public class NacaoMapperJPA {
     }
 
     public static NacaoEntityJPA toJPA(NacaoDomain domain) {
-        List<JogadorEntityJPA> jogadoresJPA = domain.getJogadores().stream()
+        List<JogadorEntityJPA> jogadoresJPA = domain.getJogadores() != null ?
+        domain.getJogadores().stream()
                 .map(JogadorMapperJPA::toJPA)
-                .toList();
+                .toList(): null;
 
         return new NacaoEntityJPA(
                 domain.getIdNacao(),

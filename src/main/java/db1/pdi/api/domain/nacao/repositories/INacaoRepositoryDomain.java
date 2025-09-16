@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface INacaoRepositoryDomain {
     NacaoDomain save(NacaoDomain jogador);
     Optional<NacaoDomain> findById(Long id);
-    Page<NacaoDomain> buscarRankingNacoes(Pageable page);
+    Page<NacaoDomain> buscarListaNacoes(Pageable page);
 }

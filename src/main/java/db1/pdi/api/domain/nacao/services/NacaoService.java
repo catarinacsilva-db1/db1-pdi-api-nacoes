@@ -23,7 +23,7 @@ public class NacaoService implements INacaoService{
     }
 
     public Page<NacaoDomain> listarRankingNacoes(Pageable page) {
-        return repository.buscarRankingNacoes(page);
+        return repository.buscarListaNacoes(page);
     }
 
     public NacaoDomain retornarNacao(Long id) {

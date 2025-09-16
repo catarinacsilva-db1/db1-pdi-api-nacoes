@@ -24,9 +24,9 @@ public class NacaoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<DetalheNacaoResponse> cadastrarNacao (@RequestBody CreateNacaoRequest request) {
+    public ResponseEntity<ListarNacaoResponse> cadastrarNacao (@RequestBody CreateNacaoRequest request) {
         NacaoDomain nacao = service.cadastrarNacao(NacaoDomainFactory.create(request.nomeNacao()));
-        return ResponseEntity.ok(NacaoResponseMapper.toResponse(nacao));
+        return ResponseEntity.ok(NacaoResponseMapper.toResponseList(nacao));
     }
 
     @GetMapping

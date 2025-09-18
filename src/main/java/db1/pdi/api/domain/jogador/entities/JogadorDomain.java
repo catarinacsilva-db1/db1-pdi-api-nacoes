@@ -1,6 +1,6 @@
 package db1.pdi.api.domain.jogador.entities;
 
-import db1.pdi.api.domain.nacao.entities.NacaoDTO;
+import db1.pdi.api.domain.nacao.entities.NacaoDomain;
 import lombok.Getter;
 
 @Getter
@@ -9,10 +9,10 @@ public class JogadorDomain {
     private final String nomeJogador;
     private final String emailJogador;
     private Long pontuacaoJogador;
-    private NacaoDTO nacao;
+    private NacaoDomain nacao;
     private boolean ativo;
 
-    public JogadorDomain(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, NacaoDTO nacao) {
+    public JogadorDomain(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, NacaoDomain nacao) {
         this.idJogador = idJogador;
         this.nomeJogador = nomeJogador;
         this.emailJogador = emailJogador;
@@ -22,7 +22,7 @@ public class JogadorDomain {
     }
 
 
-    public void atribuirNacao(NacaoDTO nacao) {
+    public void atribuirNacao(NacaoDomain nacao) {
         if (this.nacao != null) {
             throw new IllegalStateException("Jogador já pertence a uma nação");
         }

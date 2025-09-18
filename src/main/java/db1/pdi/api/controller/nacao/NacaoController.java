@@ -5,7 +5,6 @@ import db1.pdi.api.controller.nacao.response.DetalheNacaoResponse;
 import db1.pdi.api.controller.nacao.response.ListarNacaoResponse;
 import db1.pdi.api.controller.nacao.response.utils.NacaoResponseMapper;
 import db1.pdi.api.domain.nacao.entities.NacaoDTO;
-import db1.pdi.api.domain.nacao.entities.NacaoDomainFactory;
 import db1.pdi.api.domain.nacao.services.INacaoService;
 
 import jakarta.transaction.Transactional;
@@ -26,7 +25,7 @@ public class NacaoController {
     @PostMapping
     @Transactional
     public ResponseEntity<ListarNacaoResponse> cadastrarNacao (@RequestBody CreateNacaoRequest request) {
-        NacaoDTO nacao = service.cadastrarNacao(NacaoDomainFactory.create(request.nomeNacao()));
+        NacaoDTO nacao = service.cadastrarNacao(new NacaoDTO(request.nomeNacao()));
         return ResponseEntity.ok(NacaoResponseMapper.toResponseList(nacao));
     }
 

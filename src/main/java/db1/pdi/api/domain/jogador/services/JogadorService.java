@@ -5,6 +5,7 @@ import db1.pdi.api.domain.jogador.entities.JogadorDomain;
 import db1.pdi.api.domain.jogador.entities.JogadorDomainFactory;
 import db1.pdi.api.domain.jogador.repositories.IJogadorRepositoryDomain;
 import db1.pdi.api.domain.nacao.entities.NacaoDTO;
+import db1.pdi.api.domain.nacao.entities.NacaoDomain;
 import db1.pdi.api.domain.nacao.services.INacaoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class JogadorService implements IJogadorService {
                 .orElseThrow(() -> new RuntimeException("Jogador não encontrado"));
         return getDto(jogador);
     }
+
     //exclusão lógica
     public void deletarJogador(Long id) {
         JogadorDomain jogador = repository.getReferenceById(id);
@@ -44,23 +46,25 @@ public class JogadorService implements IJogadorService {
         repository.save(jogador);
     }
 
-    public JogadorDTO atualizarPontuacaoJogador(Long id, Long pontos){
+    public JogadorDTO atualizarPontuacaoJogador(Long id, Long pontos) {
         JogadorDomain jogador = repository.getReferenceById(id);
         jogador.atualizaPontos(pontos);
         repository.save(jogador);
         return getDto(jogador);
     }
 
-    public JogadorDTO atribuirNacaoAoJogador(Long idJogador, Long idNacao){
+    public JogadorDTO atribuirNacaoAoJogador(Long idJogador, Long idNacao) {
         JogadorDomain jogador = repository.getReferenceById(idJogador);
-        NacaoDTO nacao = nacaoService.retornarNacao(idNacao);
+        NacaoDomain nacao = nacaoService.retornaNacaoDomain(idNacao);
         jogador.atribuirNacao(nacao);
         repository.save(jogador);
         return getDto(jogador);
     }
 
     private static JogadorDTO getDto(JogadorDomain jogador) {
-        NacaoDTO nacao = new NacaoDTO(jogador.getNacao().idNacao(), jogador.getNacao().nomeNacao());
+        NacaoDTO nacao = jogador.getNacao() != null
+                ? new NacaoDTO(jogador.getNacao().getIdNacao(), jogador.getNacao().getNomeNacao())
+                : new NacaoDTO(null, "Sem nação");
         return new JogadorDTO(
                 jogador.getIdJogador(),
                 jogador.getNomeJogador(),

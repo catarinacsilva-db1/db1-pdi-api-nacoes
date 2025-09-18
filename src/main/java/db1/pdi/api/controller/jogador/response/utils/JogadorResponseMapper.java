@@ -14,17 +14,7 @@ import java.util.List;
 @Component
 public class JogadorResponseMapper {
     public static DetalheJogadorResponse toResponse(JogadorDTO jogador) {
-        NacaoFromJogadorResponse nacaoResponse;
-
-        if (jogador.nacao() != null) {
-            nacaoResponse = NacaoResponseMapper.toResponseFromJogador(jogador.nacao());
-        } else {
-            nacaoResponse = new NacaoFromJogadorResponse(
-                    null,
-                    "Sem nação"
-            );
-        }
-
+        NacaoFromJogadorResponse nacaoResponse = NacaoResponseMapper.toResponseFromJogador(jogador.nacao());
         return new DetalheJogadorResponse(
                 jogador.idJogador(),
                 jogador.nomeJogador(),

@@ -9,4 +9,8 @@ public record JogadorDTO(Long idJogador, String nomeJogador, String emailJogador
      public JogadorDTO (String nomeJogador, String emailJogador) {
         this(null, nomeJogador, emailJogador, 0L, null);
     }
+    //construtor para criação de listas jogadores sem email e nação
+    public JogadorDTO(Long idJogador, String nomeJogador, Long pontuacaoJogador) {
+         this(idJogador, nomeJogador, null, pontuacaoJogador, null);
+    }
 }

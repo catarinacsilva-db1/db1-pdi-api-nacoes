@@ -15,10 +15,6 @@ public class NacaoDomainFactory {
         return new NacaoDomain(idNacao, nomeNacao, jogadores, null);
     }
 
-    public static NacaoDomain toRanking(Long idNacao, String nomeNacao, Long pontosNacao) {
-        return new NacaoDomain(idNacao, nomeNacao, null, pontosNacao);
-    }
-
     public static NacaoDomain toJogadorDomain(Long idNacao, String nomeNacao) {
         return new NacaoDomain(idNacao, nomeNacao, null, null);
     }

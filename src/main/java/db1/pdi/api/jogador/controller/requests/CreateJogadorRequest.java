@@ -8,7 +8,7 @@ public record CreateJogadorRequest(
         String nomeJogador,
 
         @NotBlank
-        @Email
+        @Email(message = "Email deve ser válido")
         String emailJogador
 ) {
 }

@@ -11,6 +11,4 @@ public interface IJogadorRepositoryDomain {
     Page<JogadorDomain> findAllByAtivoTrue(Pageable page);
     void delete(JogadorDomain jogador);
     JogadorDomain getReferenceById(Long id);
-
-    Long somaPontosJogadoresPorNacao(Long idNacao);
 }

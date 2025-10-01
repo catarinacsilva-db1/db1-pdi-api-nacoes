@@ -2,11 +2,11 @@ package db1.pdi.api.domain.nacao.services;
 
 
 import db1.pdi.api.domain.jogador.JogadorDTO;
+import db1.pdi.api.domain.nacao.entities.NacaoDTO;
 import db1.pdi.api.domain.nacao.entities.NacaoDomain;
 import db1.pdi.api.domain.nacao.entities.NacaoDomainFactory;
-import db1.pdi.api.domain.pontuacao.IPontuacaoService;
-import db1.pdi.api.domain.nacao.entities.NacaoDTO;
 import db1.pdi.api.domain.nacao.repositories.INacaoRepositoryDomain;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,28 +20,29 @@ public class NacaoService implements INacaoService{
     @Autowired
     private INacaoRepositoryDomain repository;
 
-    @Autowired
-    private IPontuacaoService pontosService;
-
 
     public NacaoDTO cadastrarNacao(NacaoDTO dto) {
-        NacaoDomain nacao = NacaoDomainFactory.create(dto.nomeNacao());
-        return getDto(repository.save(nacao));
+        return getDto(repository.save(NacaoDomainFactory.create(dto.nomeNacao())));
     }
 
     public Page<NacaoDTO> listarRankingNacoes(Pageable page) {
-        Page<NacaoDomain> nacao = repository.buscarListaNacoes(page).map(pontosService::retornaPontosNacao);
-        return nacao.map(NacaoService::getDto);
+        return repository.buscarListaNacoes(page).map(nacao -> getDto(calculaPontos(nacao)));
     }
 
     public NacaoDTO retornarNacao(Long id) {
-        NacaoDomain nacao = retornaNacaoDomain(id);
-        pontosService.retornaPontosNacao(nacao);
-        return NacaoService.getDto(nacao);
+        return NacaoService.getDto(calculaPontos(retornaNacaoDomain(id)));
     }
 
     public NacaoDomain retornaNacaoDomain(Long id){
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Nação não encontrada"));
+    }
+
+    public static NacaoDomain calculaPontos(NacaoDomain nacao){
+        long pontos = nacao.getJogadores().stream()
+                .mapToLong(j -> j.getPontuacaoJogador())
+                .sum();
+        nacao.setPontosNacao(pontos);
+        return nacao;
     }
 
     public static NacaoDTO getDto(NacaoDomain nacao) {

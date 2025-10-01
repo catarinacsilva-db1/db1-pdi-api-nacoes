@@ -48,8 +48,4 @@ public class JogadorRepositoryDomainImpl implements IJogadorRepositoryDomain {
        JogadorEntityJPA entity = jpa.getReferenceById(id);
        return JogadorMapperJPA.toDomain(entity);
     }
-
-    public Long somaPontosJogadoresPorNacao(Long idNacao) {
-        return jpa.somaPontosJogadoresPorNacao(idNacao);
-    }
 }

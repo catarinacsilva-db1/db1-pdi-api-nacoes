@@ -3,11 +3,10 @@ package db1.pdi.api.nacao.services;
 
 import db1.pdi.api.jogador.dto.JogadorDTO;
 import db1.pdi.api.nacao.dto.NacaoDTO;
-import db1.pdi.api.domain.nacao.repositories.INacaoRepositoryDomain;
+import db1.pdi.api.nacao.entities.Nacao;
+import db1.pdi.api.nacao.repository.INacaoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,26 +15,28 @@ import java.util.List;
 public class NacaoService implements INacaoService{
 
     @Autowired
-    private INacaoRepositoryDomain repository;
+    private INacaoRepository repository;
 
 
     public NacaoDTO cadastrarNacao(NacaoDTO dto) {
-        return getDto(repository.save(NacaoDomainFactory.create(dto.nomeNacao())));
+        return getDto(repository.save(new Nacao(null, dto.nomeNacao(), null)));
     }
 
-    public Page<NacaoDTO> listarRankingNacoes(Pageable page) {
-        return repository.buscarListaNacoes(page).map(nacao -> getDto(calculaPontos(nacao)));
+    public List<NacaoDTO> listarRankingNacoes() {
+        return repository.findAll()
+                .stream()
+                .map(NacaoService::calculaPontos)
+                .map(NacaoService::getDto)
+                .sorted((n1, n2) -> Long.compare(n2.pontosNacao(), n1.pontosNacao()))
+                .toList();
     }
 
     public NacaoDTO retornarNacao(Long id) {
-        return NacaoService.getDto(calculaPontos(retornaNacaoDomain(id)));
+        Nacao nacao = repository.findById(id).orElseThrow(() -> new RuntimeException("Nação não encontrada"));
+        return NacaoService.getDto(calculaPontos(nacao));
     }
 
-    public NacaoDomain retornaNacaoDomain(Long id){
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Nação não encontrada"));
-    }
-
-    public static NacaoDomain calculaPontos(NacaoDomain nacao){
+    public static Nacao calculaPontos(Nacao nacao){
         long pontos = nacao.getJogadores().stream()
                 .mapToLong(j -> j.getPontuacaoJogador())
                 .sum();
@@ -43,7 +44,7 @@ public class NacaoService implements INacaoService{
         return nacao;
     }
 
-    public static NacaoDTO getDto(NacaoDomain nacao) {
+    public static NacaoDTO getDto(Nacao nacao) {
         List<JogadorDTO> jogadoresDto = nacao.getJogadores().stream()
                 .map(j -> new JogadorDTO(
                         j.getIdJogador(),

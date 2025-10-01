@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 
-public class NacaoEntityJPA {
+public class Nacao {
 
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     Long idNacao;
@@ -23,7 +23,10 @@ public class NacaoEntityJPA {
     @OneToMany(mappedBy = "nacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Jogador> jogadores;
 
-    public NacaoEntityJPA(Long idNacao, String nomeNacao, List<Jogador> jogadores) {
+    @Transient
+    Long pontosNacao;
+
+    public Nacao(Long idNacao, String nomeNacao, List<Jogador> jogadores) {
         this.idNacao = idNacao;
         this.nomeNacao = nomeNacao;
         this.jogadores = jogadores;

@@ -5,7 +5,7 @@ import db1.pdi.api.jogador.dto.JogadorDTO;
 import db1.pdi.api.jogador.entities.Jogador;
 import db1.pdi.api.jogador.repositories.IJogadorRepository;
 import db1.pdi.api.nacao.dto.NacaoDTO;
-import db1.pdi.api.nacao.services.INacaoService;
+import db1.pdi.api.nacao.repository.INacaoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,10 +20,10 @@ public class JogadorService implements IJogadorService {
     private IJogadorRepository repository;
 
     @Autowired
-    private INacaoService nacaoService;
+    private INacaoRepository nacaoRepository;
 
     public JogadorDTO cadastrarJogador(JogadorDTO jogadorDTO) {
-        Jogador jogador = new Jogador(null, jogadorDTO.nomeJogador(), jogadorDTO.emailJogador(), null, null, true);
+        Jogador jogador = new Jogador(null, jogadorDTO.nomeJogador(), jogadorDTO.emailJogador(), 0L, null, true);
         repository.save(jogador);
         return getDto(jogador);
     }
@@ -54,7 +54,7 @@ public class JogadorService implements IJogadorService {
 
     public JogadorDTO atribuirNacaoAoJogador(Long idJogador, Long idNacao) {
         Jogador jogador = repository.getReferenceById(idJogador);
-        jogador.atribuirNacao(nacaoService.retornaNacaoDomain(idNacao));
+        jogador.atribuirNacao(nacaoRepository.getReferenceById(idNacao));
         repository.save(jogador);
         return getDto(jogador);
     }

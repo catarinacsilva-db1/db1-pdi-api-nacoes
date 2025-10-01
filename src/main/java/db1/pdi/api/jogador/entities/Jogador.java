@@ -1,6 +1,6 @@
 package db1.pdi.api.jogador.entities;
 
-import db1.pdi.api.nacao.entities.NacaoEntityJPA;
+import db1.pdi.api.nacao.entities.Nacao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
@@ -20,16 +20,16 @@ public class Jogador {
     @Column(nullable = false, unique = true)
     private String emailJogador;
 
-    @PositiveOrZero @Column(nullable = false)
+    @PositiveOrZero
     private Long pontuacaoJogador;
 
     @ManyToOne
     @JoinColumn(name = "id_nacao")
-    private NacaoEntityJPA nacao;
+    private Nacao nacao;
 
     private Boolean ativo;
 
-    public Jogador(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, NacaoEntityJPA nacao, Boolean ativo) {
+    public Jogador(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, Nacao nacao, Boolean ativo) {
         this.idJogador = idJogador;
         this.nomeJogador = nomeJogador;
         this.emailJogador = emailJogador;

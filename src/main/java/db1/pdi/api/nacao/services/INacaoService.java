@@ -1,12 +1,15 @@
 package db1.pdi.api.nacao.services;
 
 import db1.pdi.api.nacao.dto.NacaoDTO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import db1.pdi.api.nacao.entities.Nacao;
+
+import java.util.List;
 
 public interface INacaoService {
     NacaoDTO cadastrarNacao(NacaoDTO nacao);
-    Page<NacaoDTO> listarRankingNacoes(Pageable page);
+    List<NacaoDTO> listarRankingNacoes();
     NacaoDTO retornarNacao(Long id);
-    NacaoDomain retornaNacaoDomain(Long id);
+    static Nacao calculaPontos(Nacao nacao) {
+        return nacao;
+    }
 }

@@ -9,10 +9,10 @@ import db1.pdi.api.nacao.services.INacaoService;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -30,8 +30,8 @@ public class NacaoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ListarNacaoResponse>> rankearNacoes(Pageable page) {
-        Page<ListarNacaoResponse> nacoes = service.listarRankingNacoes(page).map(NacaoResponseMapper::toResponseList);
+    public ResponseEntity<List<ListarNacaoResponse>> rankearNacoes() {
+        List<ListarNacaoResponse> nacoes = service.listarRankingNacoes().stream().map(NacaoResponseMapper::toResponseList).toList();
         return ResponseEntity.ok(nacoes);
     }
 

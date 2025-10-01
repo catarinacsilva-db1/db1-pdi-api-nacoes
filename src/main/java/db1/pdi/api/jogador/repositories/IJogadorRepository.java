@@ -1,12 +1,12 @@
 package db1.pdi.api.jogador.repositories;
 
-import db1.pdi.api.jogador.entities.JogadorEntityJPA;
+import db1.pdi.api.jogador.entities.Jogador;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
 
-public interface IJogadorRepositoryJPA extends JpaRepository<JogadorEntityJPA, Long> {
-    Page<JogadorEntityJPA> findAllByAtivoTrue(Pageable page);
+public interface IJogadorRepository extends JpaRepository<Jogador, Long> {
+    Page<Jogador> findAllByAtivoTrue(Pageable page);
 }

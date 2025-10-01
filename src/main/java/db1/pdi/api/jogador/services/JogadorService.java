@@ -1,9 +1,9 @@
 package db1.pdi.api.jogador.services;
 
+
 import db1.pdi.api.jogador.dto.JogadorDTO;
-import db1.pdi.api.domain.jogador.entities.JogadorDomain;
-import db1.pdi.api.domain.jogador.entities.JogadorDomainFactory;
-import db1.pdi.api.domain.jogador.repositories.IJogadorRepositoryDomain;
+import db1.pdi.api.jogador.entities.Jogador;
+import db1.pdi.api.jogador.repositories.IJogadorRepository;
 import db1.pdi.api.nacao.dto.NacaoDTO;
 import db1.pdi.api.nacao.services.INacaoService;
 
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 public class JogadorService implements IJogadorService {
 
     @Autowired
-    private IJogadorRepositoryDomain repository;
+    private IJogadorRepository repository;
 
     @Autowired
     private INacaoService nacaoService;
 
     public JogadorDTO cadastrarJogador(JogadorDTO jogadorDTO) {
-        JogadorDomain jogador = JogadorDomainFactory.create(jogadorDTO.nomeJogador(), jogadorDTO.emailJogador());
+        Jogador jogador = new Jogador(null, jogadorDTO.nomeJogador(), jogadorDTO.emailJogador(), null, null, true);
         repository.save(jogador);
         return getDto(jogador);
     }
@@ -33,34 +33,33 @@ public class JogadorService implements IJogadorService {
     }
 
     public JogadorDTO retornarJogador(Long id) {
-        JogadorDomain jogador = repository.findById(id)
+        Jogador jogador = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Jogador não encontrado"));
         return getDto(jogador);
     }
 
     //exclusão lógica
     public void deletarJogador(Long id) {
-        JogadorDomain jogador = repository.getReferenceById(id);
+        Jogador jogador = repository.getReferenceById(id);
         jogador.inativar();
         repository.save(jogador);
     }
 
     public JogadorDTO atualizarPontuacaoJogador(Long id, Long pontos) {
-        JogadorDomain jogador = repository.getReferenceById(id);
+        Jogador jogador = repository.getReferenceById(id);
         jogador.atualizaPontos(pontos);
         repository.save(jogador);
         return getDto(jogador);
     }
 
     public JogadorDTO atribuirNacaoAoJogador(Long idJogador, Long idNacao) {
-        JogadorDomain jogador = repository.getReferenceById(idJogador);
-        NacaoDomain nacao = nacaoService.retornaNacaoDomain(idNacao);
-        jogador.atribuirNacao(nacao);
+        Jogador jogador = repository.getReferenceById(idJogador);
+        jogador.atribuirNacao(nacaoService.retornaNacaoDomain(idNacao));
         repository.save(jogador);
         return getDto(jogador);
     }
 
-    private static JogadorDTO getDto(JogadorDomain jogador) {
+    private static JogadorDTO getDto(Jogador jogador) {
         NacaoDTO nacao = jogador.getNacao() != null
                 ? new NacaoDTO(jogador.getNacao().getIdNacao(), jogador.getNacao().getNomeNacao())
                 : new NacaoDTO(null, "Sem nação");

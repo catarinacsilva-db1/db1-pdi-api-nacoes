@@ -9,7 +9,7 @@ import lombok.*;
 @Table(name = "jogador")
 @Data
 @NoArgsConstructor
-public class JogadorEntityJPA {
+public class Jogador {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idJogador;
@@ -29,12 +29,34 @@ public class JogadorEntityJPA {
 
     private Boolean ativo;
 
-    public JogadorEntityJPA(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, NacaoEntityJPA nacao, Boolean ativo) {
+    public Jogador(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, NacaoEntityJPA nacao, Boolean ativo) {
         this.idJogador = idJogador;
         this.nomeJogador = nomeJogador;
         this.emailJogador = emailJogador;
         this.pontuacaoJogador = pontuacaoJogador;
         this.nacao = nacao;
         this.ativo = ativo;
+    }
+    public void atribuirNacao(Nacao nacao) {
+        if (this.nacao != null) {
+            throw new IllegalStateException("Jogador já pertence a uma nação");
+        }
+        this.nacao = nacao;
+    }
+
+    public void atualizaPontos(Long pontos) {
+        if (this.pontuacaoJogador + pontos < 0) {
+            this.pontuacaoJogador = 0L;
+
+        } else {
+            this.pontuacaoJogador += pontos;
+        }
+    }
+
+    public void inativar() {
+        if (!ativo) {
+            throw new IllegalStateException("Jogador já está inativo");
+        }
+        this.ativo = false;
     }
 }

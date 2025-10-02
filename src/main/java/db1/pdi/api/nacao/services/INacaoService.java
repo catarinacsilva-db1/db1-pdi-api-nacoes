@@ -9,7 +9,4 @@ public interface INacaoService {
     NacaoDTO cadastrarNacao(NacaoDTO nacao);
     List<NacaoDTO> listarRankingNacoes();
     NacaoDTO retornarNacao(Long id);
-    static Nacao calculaPontos(Nacao nacao) {
-        return nacao;
-    }
 }

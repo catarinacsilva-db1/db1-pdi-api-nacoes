@@ -17,7 +17,7 @@ public class Nacao {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     Long idNacao;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String nomeNacao;
 
     @OneToMany(mappedBy = "nacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

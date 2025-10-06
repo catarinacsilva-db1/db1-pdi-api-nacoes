@@ -7,6 +7,7 @@ import db1.pdi.api.nacao.entities.Nacao;
 import db1.pdi.api.nacao.repository.INacaoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,13 @@ public class NacaoService implements INacaoService{
 
 
     public NacaoDTO cadastrarNacao(NacaoDTO dto) {
-        return getDto(repository.save(new Nacao(null, dto.nomeNacao(), null)));
+        Nacao nacao = new Nacao(null, dto.nomeNacao(), null);
+        try {
+            repository.save(nacao);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("Nação com este nome já existe");
+        }
+        return getDto(nacao);
     }
 
     public List<NacaoDTO> listarRankingNacoes() {
@@ -45,12 +52,14 @@ public class NacaoService implements INacaoService{
     }
 
     public static NacaoDTO getDto(Nacao nacao) {
-        List<JogadorDTO> jogadoresDto = nacao.getJogadores().stream()
+        List<JogadorDTO> jogadoresDto = nacao.getJogadores() != null ?
+                nacao.getJogadores().stream()
                 .map(j -> new JogadorDTO(
                         j.getIdJogador(),
                         j.getNomeJogador(),
                         j.getPontuacaoJogador()))
-                .toList();
+                .toList()
+                : List.of();
 
         return new NacaoDTO(
                 nacao.getIdNacao(),

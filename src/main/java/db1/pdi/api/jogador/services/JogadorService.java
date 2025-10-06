@@ -8,6 +8,7 @@ import db1.pdi.api.nacao.dto.NacaoDTO;
 import db1.pdi.api.nacao.repository.INacaoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,11 @@ public class JogadorService implements IJogadorService {
 
     public JogadorDTO cadastrarJogador(JogadorDTO jogadorDTO) {
         Jogador jogador = new Jogador(null, jogadorDTO.nomeJogador(), jogadorDTO.emailJogador(), 0L, null, true);
-        repository.save(jogador);
+        try {
+            repository.save(jogador);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("Este email já está em uso");
+        }
         return getDto(jogador);
     }
 

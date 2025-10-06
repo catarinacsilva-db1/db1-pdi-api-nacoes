@@ -43,6 +43,11 @@ public class NacaoService implements INacaoService{
         return NacaoService.getDto(calculaPontos(nacao));
     }
 
+    public void deletarNacao(Long id) {
+        repository.deleteById(id);
+    }
+
+
     public static Nacao calculaPontos(Nacao nacao){
         long pontos = nacao.getJogadores().stream()
                 .mapToLong(j -> j.getPontuacaoJogador())

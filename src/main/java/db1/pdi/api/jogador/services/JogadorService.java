@@ -24,7 +24,7 @@ public class JogadorService implements IJogadorService {
     private INacaoRepository nacaoRepository;
 
     public JogadorDTO cadastrarJogador(JogadorDTO jogadorDTO) {
-        Jogador jogador = new Jogador(null, jogadorDTO.nomeJogador(), jogadorDTO.emailJogador(), 0L, null, true);
+        Jogador jogador = new Jogador(null, jogadorDTO.nomeJogador(), jogadorDTO.emailJogador(), 0L, null);
         try {
             repository.save(jogador);
         } catch (DataIntegrityViolationException e) {
@@ -34,7 +34,7 @@ public class JogadorService implements IJogadorService {
     }
 
     public Page<JogadorDTO> listarJogadores(Pageable page) {
-        return repository.findAllByAtivoTrue(page).map(JogadorService::getDto);
+        return repository.findAll(page).map(JogadorService::getDto);
     }
 
     public JogadorDTO retornarJogador(Long id) {
@@ -43,11 +43,9 @@ public class JogadorService implements IJogadorService {
         return getDto(jogador);
     }
 
-    //exclusão lógica
+
     public void deletarJogador(Long id) {
-        Jogador jogador = repository.getReferenceById(id);
-        jogador.inativar();
-        repository.save(jogador);
+        repository.deleteById(id);
     }
 
     public JogadorDTO atualizarPontuacaoJogador(Long id, Long pontos) {

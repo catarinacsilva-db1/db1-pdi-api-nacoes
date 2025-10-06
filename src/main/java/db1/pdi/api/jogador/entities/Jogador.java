@@ -27,15 +27,13 @@ public class Jogador {
     @JoinColumn(name = "id_nacao")
     private Nacao nacao;
 
-    private Boolean ativo;
 
-    public Jogador(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, Nacao nacao, Boolean ativo) {
+    public Jogador(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, Nacao nacao) {
         this.idJogador = idJogador;
         this.nomeJogador = nomeJogador;
         this.emailJogador = emailJogador;
         this.pontuacaoJogador = pontuacaoJogador;
         this.nacao = nacao;
-        this.ativo = ativo;
     }
     public void atribuirNacao(Nacao nacao) {
         if (this.nacao != null) {
@@ -51,12 +49,5 @@ public class Jogador {
         } else {
             this.pontuacaoJogador += pontos;
         }
-    }
-
-    public void inativar() {
-        if (!ativo) {
-            throw new IllegalStateException("Jogador já está inativo");
-        }
-        this.ativo = false;
     }
 }

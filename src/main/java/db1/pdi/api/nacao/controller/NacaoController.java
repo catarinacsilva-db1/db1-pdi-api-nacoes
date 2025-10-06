@@ -40,4 +40,13 @@ public class NacaoController {
         NacaoDTO nacao = service.retornarNacao(id);
         return ResponseEntity.ok(NacaoResponseMapper.toResponse(nacao));
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> deletarNacao(@PathVariable Long id) {
+        service.deletarNacao(id);
+        return ResponseEntity.ok().build();
+    }
+
+
 }

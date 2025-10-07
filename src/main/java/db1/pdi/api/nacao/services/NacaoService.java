@@ -39,8 +39,12 @@ public class NacaoService implements INacaoService{
     }
 
     public NacaoDTO retornarNacao(Long id) {
-        Nacao nacao = repository.findById(id).orElseThrow(() -> new RuntimeException("Nação não encontrada"));
+        Nacao nacao = retornarNacaoEntidade(id);
         return NacaoService.getDto(calculaPontos(nacao));
+    }
+
+    public Nacao retornarNacaoEntidade(Long id) {
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Nação não encontrada"));
     }
 
     public void deletarNacao(Long id) {
@@ -48,6 +52,8 @@ public class NacaoService implements INacaoService{
     }
 
 
+
+    //utilitarios
     public static Nacao calculaPontos(Nacao nacao){
         long pontos = nacao.getJogadores().stream()
                 .mapToLong(j -> j.getPontuacaoJogador())

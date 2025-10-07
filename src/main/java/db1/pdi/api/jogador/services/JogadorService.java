@@ -5,7 +5,7 @@ import db1.pdi.api.jogador.dto.JogadorDTO;
 import db1.pdi.api.jogador.entities.Jogador;
 import db1.pdi.api.jogador.repositories.IJogadorRepository;
 import db1.pdi.api.nacao.dto.NacaoDTO;
-import db1.pdi.api.nacao.repository.INacaoRepository;
+import db1.pdi.api.nacao.services.INacaoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,7 +21,7 @@ public class JogadorService implements IJogadorService {
     private IJogadorRepository repository;
 
     @Autowired
-    private INacaoRepository nacaoRepository;
+    private INacaoService nacaoService;
 
     public JogadorDTO cadastrarJogador(JogadorDTO jogadorDTO) {
         Jogador jogador = new Jogador(null, jogadorDTO.nomeJogador(), jogadorDTO.emailJogador(), 0L, null);
@@ -43,7 +43,6 @@ public class JogadorService implements IJogadorService {
         return getDto(jogador);
     }
 
-
     public void deletarJogador(Long id) {
         repository.deleteById(id);
     }
@@ -57,7 +56,7 @@ public class JogadorService implements IJogadorService {
 
     public JogadorDTO atribuirNacaoAoJogador(Long idJogador, Long idNacao) {
         Jogador jogador = repository.getReferenceById(idJogador);
-        jogador.atribuirNacao(nacaoRepository.getReferenceById(idNacao));
+        jogador.atribuirNacao(nacaoService.retornarNacaoEntidade(idNacao));
         repository.save(jogador);
         return getDto(jogador);
     }

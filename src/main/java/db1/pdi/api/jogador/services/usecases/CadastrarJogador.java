@@ -17,7 +17,7 @@ public class CadastrarJogador {
         Jogador jogador = new Jogador(null, jogadorDTO.nomeJogador(), jogadorDTO.emailJogador(), 0L, null);
         try {
             return repository.save(jogador);
-        } catch (RuntimeException e) {
+        } catch (DadosInvalidosException e) {
             throw new DadosInvalidosException("Este email já está em uso");
         }
     }

@@ -1,6 +1,8 @@
 package db1.pdi.api.infra.exceptions;
 
-public class DadosInvalidosException extends RuntimeException {
+import org.springframework.dao.DataIntegrityViolationException;
+
+public class DadosInvalidosException extends DataIntegrityViolationException {
 
     public DadosInvalidosException(String message) {
         super(message);

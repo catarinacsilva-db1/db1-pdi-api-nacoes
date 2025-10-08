@@ -1,9 +1,7 @@
 package db1.pdi.api.nacao.services.usecases.utils;
 
 import db1.pdi.api.nacao.entities.Nacao;
-import org.springframework.stereotype.Component;
 
-@Component
 public class CalculaPontosNacao {
 
     public static Nacao executar(Nacao nacao) {

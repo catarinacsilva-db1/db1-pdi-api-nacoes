@@ -13,7 +13,6 @@ public class ListarRankingNacoes {
 
     @Autowired
     private INacaoRepository repository;
-    private CalculaPontosNacao calculaPontosNacao;
 
     public List<Nacao> executar() {
         return repository.findAll()

@@ -17,7 +17,7 @@ public class CadastrarNacao {
         Nacao nacao = new Nacao(null, dto.nomeNacao(), null);
         try {
             return repository.save(nacao);
-        } catch (RuntimeException e) {
+        } catch (DadosInvalidosException e) {
             throw new DadosInvalidosException("Nação com este nome já existe");
         }
     }

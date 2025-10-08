@@ -18,11 +18,15 @@ public class NacaoService implements INacaoService{
     private INacaoRepository repository;
 
     @Autowired
-    private CadastrarNacaoUseCase cadastrarNacao;
-    private ListarRankingNacoesUseCase listarRanking;
+    private CadastrarNacao cadastrarNacao;
+    @Autowired
+    private ListarRankingNacoes listarRanking;
+    @Autowired
     private BuscarNacaoEntidade buscarNacaoEntidade;
-    private DeletarNacaoUseCase deletarNacao;
-    private BuscarNacaoPorIdUseCase buscarNacaoPorId;
+    @Autowired
+    private DeletarNacao deletarNacao;
+    @Autowired
+    private BuscarNacaoPorId buscarNacaoPorId;
 
     public NacaoDTO cadastrarNacao(NacaoDTO dto) {
         return getDto(cadastrarNacao.executar(dto));

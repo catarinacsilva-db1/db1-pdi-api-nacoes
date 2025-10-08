@@ -1,14 +1,14 @@
 package db1.pdi.api.nacao.services.usecases;
 
+import db1.pdi.api.infra.exceptions.DadosInvalidosException;
 import db1.pdi.api.nacao.dto.NacaoDTO;
 import db1.pdi.api.nacao.entities.Nacao;
 import db1.pdi.api.nacao.repository.INacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CadastrarNacaoUseCase {
+public class CadastrarNacao {
 
     @Autowired
     private INacaoRepository repository;
@@ -17,8 +17,8 @@ public class CadastrarNacaoUseCase {
         Nacao nacao = new Nacao(null, dto.nomeNacao(), null);
         try {
             return repository.save(nacao);
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("Nação com este nome já existe");
+        } catch (RuntimeException e) {
+            throw new DadosInvalidosException("Nação com este nome já existe");
         }
     }
 }

@@ -1,20 +1,19 @@
 package db1.pdi.api.jogador.services.usecases;
 
-import db1.pdi.api.infra.exceptions.RegraDeNegocioException;
+import db1.pdi.api.jogador.entities.Jogador;
 import db1.pdi.api.jogador.repositories.IJogadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DeletarJogadorUseCase {
+public class ListarJogadores {
 
     @Autowired
     private IJogadorRepository repository;
 
-    public void executar(Long id) {
-        if (!repository.existsById(id)) {
-            throw new RegraDeNegocioException("Jogador não encontrado");
-        }
-        repository.deleteById(id);
+    public Page<Jogador> executar(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 }

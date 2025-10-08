@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ListarRankingNacoesUseCase {
+public class ListarRankingNacoes {
 
     @Autowired
     private INacaoRepository repository;
@@ -18,7 +18,7 @@ public class ListarRankingNacoesUseCase {
     public List<Nacao> executar() {
         return repository.findAll()
                 .stream()
-                .map(calculaPontosNacao::calcularPontos)
+                .map(CalculaPontosNacao::executar)
                 .sorted((n1, n2) -> Long.compare(n2.getPontosNacao(), n1.getPontosNacao()))
                 .toList();
     }

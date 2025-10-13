@@ -1,6 +1,6 @@
 package db1.pdi.api.nacao.services.usecases;
 
-import db1.pdi.api.infra.exceptions.EntidadeNaoEncontrada;
+import db1.pdi.api.infra.exceptions.EntidadeNaoEncontradaException;
 import db1.pdi.api.nacao.entities.Nacao;
 import db1.pdi.api.nacao.repository.INacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,6 @@ public class BuscarNacaoEntidade {
 
     public Nacao executar(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontrada("Nação não encontrada"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Nação não encontrada"));
     }
 }

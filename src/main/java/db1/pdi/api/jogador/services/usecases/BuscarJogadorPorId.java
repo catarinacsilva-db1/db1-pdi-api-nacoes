@@ -1,6 +1,6 @@
 package db1.pdi.api.jogador.services.usecases;
 
-import db1.pdi.api.infra.exceptions.EntidadeNaoEncontrada;
+import db1.pdi.api.infra.exceptions.EntidadeNaoEncontradaException;
 import db1.pdi.api.jogador.entities.Jogador;
 import db1.pdi.api.jogador.repositories.IJogadorRepository;
 
@@ -15,6 +15,6 @@ public class BuscarJogadorPorId {
 
     public Jogador executar(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontrada("Jogador não encontrado"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Jogador não encontrado"));
     }
 }

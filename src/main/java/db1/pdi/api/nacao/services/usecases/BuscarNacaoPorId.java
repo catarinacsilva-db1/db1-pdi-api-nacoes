@@ -1,6 +1,5 @@
 package db1.pdi.api.nacao.services.usecases;
 
-import db1.pdi.api.infra.exceptions.EntidadeNaoEncontrada;
 import db1.pdi.api.nacao.entities.Nacao;
 import db1.pdi.api.nacao.repository.INacaoRepository;
 import db1.pdi.api.nacao.services.usecases.utils.CalculaPontosNacao;
@@ -12,10 +11,11 @@ public class BuscarNacaoPorId {
 
     @Autowired
     private INacaoRepository repository;
+    @Autowired
+    private BuscarNacaoEntidade buscarNacaoEntidade;
 
     public Nacao executar(Long id) {
-        Nacao nacao = repository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontrada("Nação não encontrada"));
+        Nacao nacao = buscarNacaoEntidade.executar(id);
         return CalculaPontosNacao.executar(nacao);
     }
 }

@@ -2,6 +2,8 @@ package db1.pdi.api.infra;
 
 
 import db1.pdi.api.infra.exceptions.DadosInvalidosException;
+import db1.pdi.api.infra.exceptions.EntidadeNaoEncontradaException;
+
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -23,14 +25,19 @@ public class RestExceptionHandler {
         return ResponseEntity.badRequest().body(erros);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity handleGenericException(Exception ex) {
-        return ResponseEntity.internalServerError().body("Erro interno do servidor: " + ex.getMessage());
-    }
-
     @ExceptionHandler(DadosInvalidosException.class)
     public ResponseEntity handleDadosInvalidos(DadosInvalidosException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(EntidadeNaoEncontradaException.class)
+    public ResponseEntity handleNaoEncontrado(EntidadeNaoEncontradaException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity handleGenericException(Exception ex) {
+        return ResponseEntity.internalServerError().body("Erro interno no servidor: " + ex.getMessage());
     }
 
     public record DadosErroValidacao(String campo, String mensagem) {

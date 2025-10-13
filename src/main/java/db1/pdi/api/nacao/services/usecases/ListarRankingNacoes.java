@@ -6,6 +6,7 @@ import db1.pdi.api.nacao.services.usecases.utils.CalculaPontosNacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -18,7 +19,7 @@ public class ListarRankingNacoes {
         return repository.findAll()
                 .stream()
                 .map(CalculaPontosNacao::executar)
-                .sorted((n1, n2) -> Long.compare(n2.getPontosNacao(), n1.getPontosNacao()))
+                .sorted(Comparator.comparingLong(Nacao::getPontosNacao).reversed())
                 .toList();
     }
 }

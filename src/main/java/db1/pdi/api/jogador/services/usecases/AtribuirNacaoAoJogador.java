@@ -1,6 +1,5 @@
 package db1.pdi.api.jogador.services.usecases;
 
-import db1.pdi.api.infra.exceptions.EntidadeNaoEncontrada;
 import db1.pdi.api.jogador.entities.Jogador;
 import db1.pdi.api.jogador.repositories.IJogadorRepository;
 import db1.pdi.api.nacao.services.usecases.BuscarNacaoEntidade;
@@ -15,10 +14,11 @@ public class AtribuirNacaoAoJogador {
     private IJogadorRepository repository;
     @Autowired
     private BuscarNacaoEntidade buscarNacaoEntidade;
+    @Autowired
+    private BuscarJogadorPorId buscarJogadorPorId;
 
     public Jogador executar(Long idJogador, Long idNacao) {
-        Jogador jogador = repository.findById(idJogador)
-                .orElseThrow(() -> new EntidadeNaoEncontrada("Jogador não encontrado"));
+        Jogador jogador = buscarJogadorPorId.executar(idJogador);
 
         jogador.atribuirNacao(buscarNacaoEntidade.executar(idNacao));
         return repository.save(jogador);

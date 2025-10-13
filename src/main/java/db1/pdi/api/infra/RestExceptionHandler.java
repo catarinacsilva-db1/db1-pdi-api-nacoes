@@ -23,6 +23,11 @@ public class RestExceptionHandler {
         return ResponseEntity.badRequest().body(erros);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity handleGenericException(Exception ex) {
+        return ResponseEntity.internalServerError().body("Erro interno do servidor: " + ex.getMessage());
+    }
+
     @ExceptionHandler(DadosInvalidosException.class)
     public ResponseEntity handleDadosInvalidos(DadosInvalidosException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());

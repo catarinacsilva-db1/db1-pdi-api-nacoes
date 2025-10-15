@@ -1,20 +1,21 @@
 package db1.pdi.api.infra;
 
 
+import db1.pdi.api.infra.exceptions.AtribuicaoInvalidaException;
 import db1.pdi.api.infra.exceptions.DadosInvalidosException;
 import db1.pdi.api.infra.exceptions.EntidadeNaoEncontradaException;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity handle404() {
         return ResponseEntity.notFound().build();
     }
@@ -27,6 +28,11 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(DadosInvalidosException.class)
     public ResponseEntity handleDadosInvalidos(DadosInvalidosException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(AtribuicaoInvalidaException.class)
+    public ResponseEntity handleDadosInvalidos(AtribuicaoInvalidaException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 

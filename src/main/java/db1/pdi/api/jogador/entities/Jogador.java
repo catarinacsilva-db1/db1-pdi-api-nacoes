@@ -1,5 +1,6 @@
 package db1.pdi.api.jogador.entities;
 
+import db1.pdi.api.infra.exceptions.AtribuicaoInvalidaException;
 import db1.pdi.api.nacao.entities.Nacao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -37,7 +38,7 @@ public class Jogador {
     }
     public void atribuirNacao(Nacao nacao) {
         if (this.nacao != null) {
-            throw new IllegalStateException("Jogador já pertence a uma nação");
+            throw new AtribuicaoInvalidaException("Jogador já pertence a uma nação");
         }
         this.nacao = nacao;
     }

@@ -15,22 +15,25 @@ public class NacaoResponseMapper {
 
     public static DetalheNacaoResponse toResponse(NacaoDTO nacao) {
         List<ListarJogadoresResponse> jogadores = JogadorResponseMapper.toListJogadoresResponse(nacao.jogadores());
-        return new DetalheNacaoResponse(
-                nacao.idNacao(),
-                nacao.nomeNacao(),
-                jogadores);
+        return DetalheNacaoResponse.builder()
+                .idNacao(nacao.idNacao())
+                .nomeNacao(nacao.nomeNacao())
+                .jogadores(jogadores)
+                .build();
     }
 
     public static ListarNacaoResponse toResponseList(NacaoDTO nacao) {
-        return new ListarNacaoResponse(
-                nacao.idNacao(),
-                nacao.nomeNacao(),
-                nacao.pontosNacao());
+        return ListarNacaoResponse.builder()
+                .idNacao(nacao.idNacao())
+                .nomeNacao(nacao.nomeNacao())
+                .pontosNacao(nacao.pontosNacao())
+                .build();
     }
 
     public static NacaoFromJogadorResponse toResponseFromJogador(NacaoDTO nacao) {
-        return new NacaoFromJogadorResponse(
-                nacao.idNacao(),
-                nacao.nomeNacao());
+        return NacaoFromJogadorResponse.builder()
+                .idNacao(nacao.idNacao())
+                .nomeNacao(nacao.nomeNacao())
+                .build();
     }
 }

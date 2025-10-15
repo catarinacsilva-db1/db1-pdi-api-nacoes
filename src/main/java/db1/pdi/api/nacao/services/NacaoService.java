@@ -48,17 +48,19 @@ public class NacaoService implements INacaoService{
     public static NacaoDTO getDto(Nacao nacao) {
         List<JogadorDTO> jogadoresDto = nacao.getJogadores() != null ?
                 nacao.getJogadores().stream()
-                .map(j -> new JogadorDTO(
-                        j.getIdJogador(),
-                        j.getNomeJogador(),
-                        j.getPontuacaoJogador()))
+                .map(j -> JogadorDTO.builder()
+                    .idJogador(j.getIdJogador())
+                    .nomeJogador(j.getNomeJogador())
+                    .pontuacaoJogador(j.getPontuacaoJogador())
+                    .build())
                 .toList()
                 : List.of();
 
-        return new NacaoDTO(
-                nacao.getIdNacao(),
-                nacao.getNomeNacao(),
-                jogadoresDto,
-                nacao.getPontosNacao());
+        return NacaoDTO.builder()
+                .idNacao(nacao.getIdNacao())
+                .nomeNacao(nacao.getNomeNacao())
+                .jogadores(jogadoresDto)
+                .pontosNacao(nacao.getPontosNacao())
+                .build();
     }
 }

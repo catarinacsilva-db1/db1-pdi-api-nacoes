@@ -8,6 +8,7 @@ import db1.pdi.api.nacao.dto.NacaoDTO;
 import db1.pdi.api.nacao.services.INacaoService;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,8 @@ public class NacaoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<ListarNacaoResponse> cadastrarNacao (@RequestBody CreateNacaoRequest request) {
-        NacaoDTO nacao = service.cadastrarNacao(new NacaoDTO(request.nomeNacao()));
+    public ResponseEntity<ListarNacaoResponse> cadastrarNacao (@RequestBody @Valid CreateNacaoRequest request) {
+        NacaoDTO nacao = service.cadastrarNacao(NacaoDTO.builder().nomeNacao(request.nomeNacao()).build());
         return ResponseEntity.ok(NacaoResponseMapper.toResponseList(nacao));
     }
 

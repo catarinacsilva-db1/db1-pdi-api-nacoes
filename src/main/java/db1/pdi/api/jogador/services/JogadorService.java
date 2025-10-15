@@ -52,15 +52,24 @@ public class JogadorService implements IJogadorService {
         return getDto(atribuirNacaoAoJogador.executar(idJogador, idNacao));
     }
 
+
+
     private static JogadorDTO getDto(Jogador jogador) {
         NacaoDTO nacao = jogador.getNacao() != null
-                ? new NacaoDTO(jogador.getNacao().getIdNacao(), jogador.getNacao().getNomeNacao())
-                : new NacaoDTO(null, "Sem nação");
-        return new JogadorDTO(
-                jogador.getIdJogador(),
-                jogador.getNomeJogador(),
-                jogador.getEmailJogador(),
-                jogador.getPontuacaoJogador(),
-                nacao);
+                ? NacaoDTO.builder()
+                .idNacao(jogador.getNacao().getIdNacao())
+                .nomeNacao(jogador.getNacao().getNomeNacao())
+                .build()
+
+                : NacaoDTO.builder().nomeNacao("Sem nação")
+                .build();
+
+        return JogadorDTO.builder()
+                .idJogador(jogador.getIdJogador())
+                .emailJogador(jogador.getEmailJogador())
+                .nomeJogador(jogador.getNomeJogador())
+                .pontuacaoJogador(jogador.getPontuacaoJogador())
+                .nacao(nacao)
+                .build();
     }
 }

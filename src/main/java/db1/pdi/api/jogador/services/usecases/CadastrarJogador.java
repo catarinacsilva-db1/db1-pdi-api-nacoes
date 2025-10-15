@@ -18,7 +18,7 @@ public class CadastrarJogador {
         if (repository.existsByEmailJogador(jogadorDTO.emailJogador())) {
             throw new DadosInvalidosException("Este email já está em uso");
         }
-        Jogador jogador = new Jogador(null, jogadorDTO.nomeJogador(), jogadorDTO.emailJogador(), 0L, null);
+        Jogador jogador = new Jogador(jogadorDTO.nomeJogador(), jogadorDTO.emailJogador());
             return repository.save(jogador);
     }
 }

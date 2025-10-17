@@ -32,7 +32,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(AtribuicaoInvalidaException.class)
-    public ResponseEntity handleDadosInvalidos(AtribuicaoInvalidaException ex) {
+    public ResponseEntity handleAtribuicaoInvalidaException(AtribuicaoInvalidaException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 

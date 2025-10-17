@@ -15,20 +15,22 @@ import java.util.List;
 public class JogadorResponseMapper {
     public static DetalheJogadorResponse toResponse(JogadorDTO jogador) {
         NacaoFromJogadorResponse nacaoResponse = NacaoResponseMapper.toResponseFromJogador(jogador.nacao());
-        return new DetalheJogadorResponse(
-                jogador.idJogador(),
-                jogador.nomeJogador(),
-                jogador.emailJogador(),
-                jogador.pontuacaoJogador(),
-                nacaoResponse);
+        return DetalheJogadorResponse.builder()
+                .idJogador(jogador.idJogador())
+                .nomeJogador(jogador.nomeJogador())
+                .emailJogador(jogador.emailJogador())
+                .pontuacaoJogador(jogador.pontuacaoJogador())
+                .nacao(nacaoResponse)
+                .build();
     }
 
     public static List<ListarJogadoresResponse> toListJogadoresResponse(List<JogadorDTO> jogadores) {
         return jogadores.stream()
-                .map(jogador -> new ListarJogadoresResponse(
-                        jogador.idJogador(),
-                        jogador.nomeJogador(),
-                        jogador.pontuacaoJogador()))
+                .map(jogador -> ListarJogadoresResponse.builder()
+                .idJogador(jogador.idJogador())
+                .nomeJogador(jogador.nomeJogador())
+                .pontuacaoJogador(jogador.pontuacaoJogador())
+                .build())
                 .toList();
     }
 }

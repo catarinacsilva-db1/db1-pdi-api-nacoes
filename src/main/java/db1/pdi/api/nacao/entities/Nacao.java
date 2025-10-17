@@ -11,6 +11,7 @@ import java.util.List;
 @Table (name = "nacao")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 
 public class Nacao {
 
@@ -26,9 +27,9 @@ public class Nacao {
     @Transient
     Long pontosNacao;
 
-    public Nacao(Long idNacao, String nomeNacao, List<Jogador> jogadores) {
-        this.idNacao = idNacao;
+    public Nacao(String nomeNacao) {
+        this.idNacao = null;
         this.nomeNacao = nomeNacao;
-        this.jogadores = jogadores;
+        this.jogadores = null;
     }
 }

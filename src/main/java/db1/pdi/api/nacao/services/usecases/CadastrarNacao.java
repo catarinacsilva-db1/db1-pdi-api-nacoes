@@ -18,7 +18,7 @@ public class CadastrarNacao {
         if (repository.existsByNomeNacao(dto.nomeNacao())) {
             throw new DadosInvalidosException("Nação com este nome já existe");
         }
-        Nacao nacao = new Nacao(null, dto.nomeNacao(), null);
+        Nacao nacao = new Nacao(dto.nomeNacao());
             return repository.save(nacao);
     }
 }

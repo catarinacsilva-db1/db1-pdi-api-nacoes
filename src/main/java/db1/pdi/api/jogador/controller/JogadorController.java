@@ -31,7 +31,10 @@ public class JogadorController {
     public ResponseEntity<DetalheJogadorResponse> postJogador(@RequestBody @Valid CreateJogadorRequest request) {
 
         JogadorDTO jogador = service.cadastrarJogador(
-                new JogadorDTO(request.nomeJogador(), request.emailJogador()));
+               JogadorDTO.builder()
+                       .nomeJogador(request.nomeJogador())
+                       .emailJogador(request.emailJogador())
+                       .build());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 JogadorResponseMapper.toResponse(jogador));

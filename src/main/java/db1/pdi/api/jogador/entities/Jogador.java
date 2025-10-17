@@ -10,6 +10,8 @@ import lombok.*;
 @Table(name = "jogador")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+
 public class Jogador {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +30,12 @@ public class Jogador {
     @JoinColumn(name = "id_nacao")
     private Nacao nacao;
 
-
-    public Jogador(Long idJogador, String nomeJogador, String emailJogador, Long pontuacaoJogador, Nacao nacao) {
-        this.idJogador = idJogador;
+    public Jogador(String nomeJogador, String emailJogador) {
+        this.idJogador = null;
         this.nomeJogador = nomeJogador;
         this.emailJogador = emailJogador;
-        this.pontuacaoJogador = pontuacaoJogador;
-        this.nacao = nacao;
+        this.pontuacaoJogador = 0L;
+        this.nacao = null;
     }
     public void atribuirNacao(Nacao nacao) {
         if (this.nacao != null) {

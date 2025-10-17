@@ -1,4 +1,9 @@
 package db1.pdi.api.nacao.controller.request;
 
-public record CreateNacaoRequest(String nomeNacao) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateNacaoRequest(
+        @NotBlank
+        String nomeNacao
+) {
 }
